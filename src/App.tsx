@@ -1,12 +1,31 @@
 import { defineComponent} from "vue";
+import { RouterView } from "vue-router";
 
 export const App = defineComponent({
   setup(){
-    const count = ref(0)
     return () => 
     <>
-      <div>{count.value}</div>
-      <div>{{ count }}</div>
+    <header>导航
+      <ul>
+        <li>
+          <router-link to="/">Foo</router-link>
+        </li>
+        <li>
+          <router-link to="/about">Bar</router-link>
+        </li>
+      </ul>
+    </header>
+
+      <div>
+        <RouterView/>
+      </div>
+      
+      <context>
+        <hr>中间内容</hr>
+        <hr>中间内容</hr>
+      </context>
+
+    <footer>页脚</footer>
     </>
   }
 })

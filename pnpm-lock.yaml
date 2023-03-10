@@ -9,12 +9,12 @@ specifiers:
   typescript: 4.6.3
   vite: ^4.1.4
   vue: 3.2.31
-  vue-router: 4.0.14
+  vue-router: ^4.0.13
   vue-tsc: 0.29.8
 
 dependencies:
   sass: 1.49.11
-  vue-router: 4.0.14_vue@3.2.31
+  vue-router: 4.0.13_vue@3.2.31
 
 devDependencies:
   '@vitejs/plugin-legacy': 4.0.1_terser@5.16.5+vite@4.1.4
@@ -2686,8 +2686,8 @@ packages:
       vscode-typescript-languageservice: 0.29.8
     dev: true
 
-  /vue-router/4.0.14_vue@3.2.31:
-    resolution: {integrity: sha512-wAO6zF9zxA3u+7AkMPqw9LjoUCjSxfFvINQj3E/DceTt6uEz1XZLraDhdg2EYmvVwTBSGlLYsUw8bDmx0754Mw==}
+  /vue-router/4.0.13_vue@3.2.31:
+    resolution: {integrity: sha512-LmXrC+BkDRLak+d5xTMgUYraT3Nj0H/vCbP+7usGvIl9Viqd1UP6AsP0i69pSbn9O0dXK/xCdp4yPw21HqV9Jw==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:

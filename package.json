@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "sass": "1.49.11",
-    "vue-router": "4.0.14"
+    "vue-router": "^4.0.13"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^4.0.1",

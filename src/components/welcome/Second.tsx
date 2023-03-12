@@ -1,8 +1,22 @@
 import { defineComponent } from 'vue';
-export const Second = defineComponent({ 
-  setup : (props,context) => {
-    return () => (
-      <div> Second </div>
-    )
-  }
-})
+import style from './WelcomeLayout.module.scss';
+import clock from '../../assets/icons/clock.svg';
+import { RouterLink } from 'vue-router';
+import { WelcomeLayout } from './WelcomeLayout';
+
+export const Second = () => (
+  <WelcomeLayout>
+    {{
+      icon: () => <img class={style.icon} src={clock}/>,
+      title: () => <h2>每日提醒<br/>不遗漏每一笔账单</h2>,
+      buttons: () => <>
+        <RouterLink class={style.fake} to="/start">跳过</RouterLink> {/* 在样式中设置隐藏 */}
+        <RouterLink to="/welcome/3">下一页</RouterLink>
+        <RouterLink to="/start">跳过</RouterLink>
+      </>
+    }}
+  </WelcomeLayout>
+)
+
+
+Second.displayName = 'Second'

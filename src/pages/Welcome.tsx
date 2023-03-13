@@ -1,16 +1,32 @@
 import { defineComponent, ref, VNode, Transition, watchEffect, } from 'vue';
-import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router';
+import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from 'vue-router';
 import style from './Welcome.module.scss';
-import logo from '../assets/icons/mangosteen.svg'
 import { useSwipe } from '../hooks/useSwipe';
+import { throttle } from '../shared/throttle';
+
+const pushMap: Record<string, string> = {
+  'Welcome1': '/welcome/2',
+  'Welcome2': '/welcome/3',
+  'Welcome3': '/welcome/4',
+  'Welcome4': '/start',
+}
 
 export const Welcome = defineComponent({
   setup: (props, context) => {
-    const main = ref<HTMLElement | null>(null)
-    const { direction, swiping } = useSwipe(main)
-    watchEffect(() => {
-      console.log(swiping.value, direction.value)
-    })
+    const main = ref<HTMLElement>();
+    const { direction, swiping } = useSwipe(main, { beforeStart: e => e.preventDefault() });
+    const route = useRoute();
+    const router = useRouter();
+    const replace = throttle( () => {
+      const name = (route.name || 'Welcome1').toString();
+      router.replace(pushMap[name]);
+    }, 500);
+    watchEffect( () => {
+      if (swiping.value && direction.value === 'left') {
+        replace();
+      }
+    }
+    );
 
     return () => (
       <div class={style.wrapper}>
@@ -22,7 +38,7 @@ export const Welcome = defineComponent({
           <h1>山竹app</h1>
         </header>
 
-        <main class={style.main}>
+        <main class={style.main} ref={main}>
           <RouterView name='main'>
             {({ Component: X, route: R }: { Component: VNode, route: RouteLocationNormalizedLoaded }) =>
               <Transition enterFromClass={style.slide_fade_enter_from} 

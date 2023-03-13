@@ -25,6 +25,7 @@
     flex-direction: column;
     position: relative;
     margin: 16px 16px var(--welcome-nav-gap);
+    padding: 0;
   }
 
   > footer {
@@ -41,7 +42,6 @@
   height: 100%;
   transition: all 0.5s ease-out;
 }
-
 .slide_fade_enter_from {
   transform: translateX(100vw);
 }

@@ -50,14 +50,12 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>, options?: Option
     end.value = start.value = { x: e.touches[0].screenX, y: e.touches[0].screenY };   //touches 指用户触碰到键盘的第一个指头
     options?.afterStart?.(e);
   };
-
   const onMove = (e: TouchEvent) => {
     options?.beforeMove?.(e);
     if (!start.value) { return };
     end.value = end.value = { x: e.touches[0].screenX, y: e.touches[0].screenY, };
     options?.afterMove?.(e);
   };
-
   const onEnd = (e: TouchEvent) => {
     options?.beforeEnd?.(e);
     swiping.value = false;
@@ -67,12 +65,13 @@ export const useSwipe = (element: Ref<HTMLElement | undefined>, options?: Option
   //onMounted、onUnmounted是vue提供的一个hook:
   onMounted(
     () => {
-      if (!element.value) { return };
+      if (!element.value) { return };  //如果 element不存在 直接return
       element.value.addEventListener('touchstart', onStart);
       element.value.addEventListener('touchmove', onMove);
       element.value.addEventListener('touchend', onEnd);
     }
   );
+  // 监听了元素 就需要在挂载时取消掉“
   onUnmounted(
     () => {
       if (!element.value) { return };

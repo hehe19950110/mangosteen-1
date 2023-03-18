@@ -11,7 +11,7 @@ const pushMap: Record<string, string> = {
   'Welcome4': '/start',
 }
 
-export const Welcome = defineComponent({
+export const WelcomePage = defineComponent({
   setup: (props, context) => {
     const main = ref<HTMLElement>();
     const { direction, swiping } = useSwipe(main, { beforeStart: e => e.preventDefault() });

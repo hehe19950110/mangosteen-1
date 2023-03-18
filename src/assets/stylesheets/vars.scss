@@ -9,7 +9,10 @@
   --transition-duration: 0.5s;
   --button-bg:#603dbf;
   --button-text:white;
-  --button-font-size:18px;
+  --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
+  --floatbutton-icon-bg: var(--button-bg);
+  --floatbutton-icon-text:var(--button-text);
+
 }

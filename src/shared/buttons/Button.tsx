@@ -2,8 +2,8 @@ import { defineComponent } from 'vue';
 import  style  from './Button.module.scss'
 
 interface Props {
-  onClick: Function;
-}
+  onClick?: (e: MouseEvent) => void;
+};
 
 export const Button = defineComponent<Props>({ 
   setup : (props,context) => {

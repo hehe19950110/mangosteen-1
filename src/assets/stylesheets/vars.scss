@@ -5,7 +5,10 @@
   --welcome-bg-end: #8555bc;
   --welcome-nav-height: 64px;
   --welcome-nav-gap: 8px;
-  --z-index-bottom-nav: 10; 
+
+  --z-index-bottom-nav: 9; 
+  --z-index-overlay: 19;
+
   --transition-duration: 0.5s;
 
   --button-bg:#603dbf;
@@ -20,4 +23,9 @@
   --navbar-bg-end: var(--welcome-bg-end);
   --navbar-text: var(--welcome-text);
 
+  --overlay-mask-bg: rgba(0, 0, 0, 0.5);
+  --overlay-bg: var(--welcome-text);
+  --overlay-user-bg: var(--button-bg);
+  --overlay-user-text: var(--welcome-text);
+  --top-safe-area-height: 24px;
 }

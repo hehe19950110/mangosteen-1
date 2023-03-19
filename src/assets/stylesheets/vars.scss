@@ -7,12 +7,17 @@
   --welcome-nav-gap: 8px;
   --z-index-bottom-nav: 10; 
   --transition-duration: 0.5s;
+
   --button-bg:#603dbf;
-  --button-text:white;
+  --button-text:var(--welcome-text);
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
   --floatbutton-icon-bg: var(--button-bg);
   --floatbutton-icon-text:var(--button-text);
+
+  --navbar-bg-start: var(--welcome-bg-start);
+  --navbar-bg-end: var(--welcome-bg-end);
+  --navbar-text: var(--welcome-text);
 
 }

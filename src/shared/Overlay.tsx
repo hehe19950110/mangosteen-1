@@ -19,6 +19,7 @@ export const Overlay = defineComponent({
     return () => ( 
       <>
         <div class={style.mask} onClick={close}></div>
+        
         <div class={style.overlay}>
           <section class={style.currentUser} onClick={onClickSignIn}>
             <h2>未登录</h2>

@@ -7,14 +7,16 @@ import { Second } from "../components/welcome/Second";
 import { SecondActions } from "../components/welcome/SecondActions";
 import { Third } from "../components/welcome/Third";
 import { ThirdActions } from "../components/welcome/ThirdActions";
+import { ItemCreate } from "../components/item/ItemCreate";
+import { ItemList } from "../components/item/ItemList";
+import { ItemPage } from "../pages/ItemPage";
 import { StartPage } from "../pages/StartPage";
 import { WelcomePage } from "../pages/WelcomePage";
 
 export const routes: RouteRecordRaw[] = [
   { path: '/', redirect: '/welcome' },
   {
-    path: '/welcome',
-    component: WelcomePage,
+    path: '/welcome', component: WelcomePage,
     children: [
       { path: '', redirect: '/welcome/1', },   //默认到/welcome/1
       { path: '1', name: "Welcome1", components: { main: First, footer: FirstActions }, },
@@ -25,4 +27,11 @@ export const routes: RouteRecordRaw[] = [
     ]
   },
   { path:'/start', component:StartPage},
+  {
+    path: '/items', component: ItemPage,
+    children: [
+      { path: '', component: ItemList },
+      { path: 'create', component: ItemCreate },
+    ]
+  },
 ]

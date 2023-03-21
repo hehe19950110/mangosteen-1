@@ -2,6 +2,7 @@ import { defineComponent, onUpdated, PropType, ref  } from 'vue';
 import { LayoutNavBar } from '../../layouts/LayoutNavBar';
 import { Icon } from '../../shared/Icon';
 import { Tab, Tabs } from '../../shared/Tabs';
+import { InputPad } from './InputPad';
 import style from './ItemCreate.module.scss';
 
 export const ItemCreate = defineComponent({ 
@@ -30,6 +31,10 @@ export const ItemCreate = defineComponent({
                 <h3>收入列表</h3>
               </Tab>
             </Tabs>
+
+            <div class={style.inputPad_wrapper}>
+              <InputPad />
+            </div>
           </>
         }}
       </LayoutNavBar>

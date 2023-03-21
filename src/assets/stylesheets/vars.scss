@@ -11,12 +11,14 @@
 
   --transition-duration: 0.5s;
 
-  --button-bg:#603dbf;
+  --button-bg: white;
+  --button-bg-important: #603dbf;
+  --button-border-color: #ddd;
   --button-text:var(--welcome-text);
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
-  --floatbutton-icon-bg: var(--button-bg);
+  --floatbutton-icon-bg: var(--button-bg-important);
   --floatbutton-icon-text:var(--button-text);
 
   --navbar-bg-start: var(--welcome-bg-start);
@@ -30,4 +32,7 @@
   --top-safe-area-height: 24px;
 
   --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
+
+  --amount-text: #53A867;
+  --date-text: #999999;
 }

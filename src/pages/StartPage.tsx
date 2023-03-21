@@ -13,42 +13,40 @@ export const StartPage = defineComponent({
   setup : (props,context) => {
     const refOverlayVisible = ref(false);
     const onClickMenu = () => {
-      refOverlayVisible.value = !refOverlayVisible.value   // 取反refOverlayVisible.value
+      refOverlayVisible.value = !refOverlayVisible.value
     };
     
     return () => (
       <LayoutNavBar>
-        {
-          {
-            title: () => '山竹记账',
-            icon: () => <Icon name="menu" class={style.navIcon} onClick={onClickMenu} />,
-            default: () => (
-              <>
-                <Center class={style.pig_wrapper}>
-                  <Icon name="pig" class={style.pig} />
-                </Center>
+        {{
+          title: () => '山竹记账',
+          icon: () => <Icon name="menu" class={style.navIcon} onClick={onClickMenu} />,
+          default: () => (
+            <>
+              <Center class={style.pig_wrapper}>
+                <Icon name="pig" class={style.pig} />
+              </Center>
 
-                <div class={style.button_wrapper}>
-                  <RouterLink to="/items/create">
-                    <Button class={style.button}> 开始记账 </Button>
-                  </RouterLink>
-                </div>
+              <div class={style.button_wrapper}>
                 <RouterLink to="/items/create">
-                  <FloatButton iconName='add' />
+                  <Button class={style.button}> 开始记账 </Button>
                 </RouterLink>
+              </div>
+              <RouterLink to="/items/create">
+                <FloatButton iconName='add' />
+              </RouterLink>
 
-                {/* 
-                {refOverlayVisible.value &&
-                  <Overlay onClose={() => refOverlayVisible.value = !refOverlayVisible.value} />
-                } 等同于：
-                */}
-                {refOverlayVisible.value &&
-                  <Overlay onClose={() => refOverlayVisible.value = false} />
-                }
-              </>
-            ),
-          }
-        }
+              {/* 
+              {refOverlayVisible.value &&
+                <Overlay onClose={() => refOverlayVisible.value = !refOverlayVisible.value} />
+              } 等同于：
+              */}
+              {refOverlayVisible.value &&
+                <Overlay onClose={() => refOverlayVisible.value = false} />
+              }
+            </>
+          ),
+        }}
       </LayoutNavBar>
     )
   }

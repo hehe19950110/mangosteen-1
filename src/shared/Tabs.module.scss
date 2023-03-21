@@ -5,7 +5,7 @@
     align-items: center;
     text-align: center;
     color: var(--navbar-text);
-
+    font-size: 20px;
     > li {
       flex-grow: 1;
       flex-shrink: 0;
@@ -14,9 +14,9 @@
       &.selected {
         position: relative;
         &::after {
-          
           display: block;
           position: absolute;
+          content: '';
           bottom: 0;
           left: 0;
           width: 100%;

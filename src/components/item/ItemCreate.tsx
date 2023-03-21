@@ -13,7 +13,7 @@ export const ItemCreate = defineComponent({
 
   setup: (props, context) => {
     const refKind = ref('支出');  //默认是支出
-    const onUpdateSelected = (name : string) => refKind.value = name
+    // const onUpdateSelected = (name : string) => refKind.value = name
     
     return () => (
       <LayoutNavBar>
@@ -21,7 +21,8 @@ export const ItemCreate = defineComponent({
           title: () => '记一笔',
           icon: () => <Icon name="left" class={style.navIcon} />,
           default: () => <>
-            <Tabs selected={refKind.value} onUpdateSelected={onUpdateSelected}>
+            {/*<Tabs selected={refKind.value} onUpdateSelected = {name => refKind.value = name}>*/}
+            <Tabs v-model:selected={refKind.value}>
               <Tab name="支出">
                 <h3>支出列表</h3>
               </Tab>

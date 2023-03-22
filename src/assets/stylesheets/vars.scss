@@ -2,7 +2,7 @@
   --welcome-card-bg: white;
   --welcome-text: white;
   --welcome-bg-start: #5e3bbb;
-  --welcome-bg-end: #8555bc;
+  --welcome-bg-end: #9867cf;
   --welcome-nav-height: 64px;
   --welcome-nav-gap: 8px;
 
@@ -11,28 +11,43 @@
 
   --transition-duration: 0.5s;
 
-  --button-bg: #603dbf;
-  --button-bg-important: #603dbf;
+  --button-bg: #6a48c5;
+  --button-bg-important: #6a48c5;
   --button-border-color: #ddd;
   --button-text:var(--welcome-text);
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
-  --floatbutton-icon-bg: var(--button-bg-important);
-  --floatbutton-icon-text:var(--button-text);
+  --floatbutton-icon-bg: #6a48c5;
+  --floatbutton-icon-text:white;;
 
-  --navbar-bg-start: var(--welcome-bg-start);
-  --navbar-bg-end: var(--welcome-bg-end);
-  --navbar-text: var(--welcome-text);
+  --navbar-bg-start: #5e3bbb;
+  --navbar-bg-end: #9867cf;
+  --navbar-text: white;
 
   --overlay-mask-bg: rgba(0, 0, 0, 0.5);
-  --overlay-bg: var(--welcome-text);
-  --overlay-user-bg: var(--button-bg);
-  --overlay-user-text: var(--welcome-text);
+  --overlay-bg: white;
+  --overlay-user-bg: #6a48c5;
+  --overlay-user-text: white;
   --top-safe-area-height: 24px;
 
   --tabs-indicator-bg: rgba(255, 255, 255, 0.5);
 
-  --amount-text: #53A867;
+  --amount-text: #c052eb;
   --date-text: #999999;
+  --number-button-bg-important: #6a48c5;
+  --number-button-bg: white;
+  --number-button-text-important: white;
+
+  --top-safe-area-height: 24px;
+
+  --input-border-color: #6a48c5;
+  --input-min-height: 36px;
+  --input-radius: var(--button-radius);
+  --input-shadow: rgba(0,0,0,0.25);
+
+  --emoji-nav-text-selected: #333;
+  --emoji-nav-text: #999;
+  --error-color: #E10505;
+
 }

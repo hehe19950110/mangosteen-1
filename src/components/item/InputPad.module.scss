@@ -39,10 +39,7 @@
   gap: 1px;
   > button {
     border: none;
-    background: var(--button-bg);
-    &:nth-child(4n) {
-      border-right: none;
-    }   // 每第四个 取消边框
+    background: var(--number-button-bg);
     &:nth-child(1) {
       grid-area: n1;
     }
@@ -81,8 +78,8 @@
     }
     &:nth-child(13) {
       grid-area: s;
-      background: var(--button-bg-important);
-      color: var(--button-text-important);
+      background: var(--number-button-bg-important);
+      color: var(--number-button-text-important);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { DatetimePicker, NumberKeyboard, Popup } from "vant";
+import { DatetimePicker, Popup } from "vant";
 import { defineComponent, PropType, ref } from "vue";
 import { Icon } from "../../shared/Icon";
 import { time } from "../../shared/time";
@@ -15,8 +15,8 @@ export const InputPad = defineComponent({
     const refDate = ref<Date>(now);
     const appendText = (n: number | string) => {
       const nString = n.toString();
-      const dotIndex = refAmount.value.indexOf(".");
-      if (refAmount.value.length >= 13) {
+      const dotIndex = refAmount.value.indexOf("."); //小数点的位置
+      if (refAmount.value.length >= 15) {
         return;
       }
       if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) {
@@ -24,13 +24,12 @@ export const InputPad = defineComponent({
       }
 
       if (nString === ".") {
-        // 有小数点的情况：
+        // 有小数点的情况
         if (dotIndex >= 0) {
           return;
         }
-      }
-      // 没有小数点的情况：
-      else if (nString === "0") {
+      } else if (nString === "0") {
+        // 没有小数点的情况
         if (dotIndex === -1) {
           // 没小数点，但有0：
           if (refAmount.value === "0") {

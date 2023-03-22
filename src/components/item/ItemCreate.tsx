@@ -1,172 +1,36 @@
-import { DatetimePicker, NumberKeyboard, Popup } from "vant";
+import { LayoutNavBar } from "../../layouts/LayoutNavBar";
 import { defineComponent, PropType, ref } from "vue";
+import style from "./ItemCreate.module.scss";
 import { Icon } from "../../shared/Icon";
-import { time } from "../../shared/time";
-import style from "./InputPad.module.scss";
+import { Tab, Tabs } from "../../shared/Tabs";
+import { InputPad } from "./InputPad";
 
-export const InputPad = defineComponent({
+export const ItemCreate = defineComponent({
   props: {
     name: {
       type: String as PropType<string>,
     },
   },
   setup: (props, context) => {
-    const now = new Date();
-    const refDate = ref<Date>(now);
-    const appendText = (n: number | string) => {
-      const nString = n.toString();
-      const dotIndex = refAmount.value.indexOf(".");
-      if (refAmount.value.length >= 13) {
-        return;
-      }
-      if (dotIndex >= 0 && refAmount.value.length - dotIndex > 2) {
-        return;
-      }
-
-      if (nString === ".") {
-        // 有小数点的情况：
-        if (dotIndex >= 0) {
-          return;
-        }
-      }
-      // 没有小数点的情况：
-      else if (nString === "0") {
-        if (dotIndex === -1) {
-          // 没小数点，但有0：
-          if (refAmount.value === "0") {
-            return;
-          }
-        }
-      } else {
-        if (refAmount.value === "0") {
-          refAmount.value = "";
-        }
-      }
-      refAmount.value += n.toString();
-    };
-    const buttons = [
-      {
-        text: "1",
-        onClick: () => {
-          appendText(1);
-        },
-      },
-      {
-        text: "2",
-        onClick: () => {
-          appendText(2);
-        },
-      },
-      {
-        text: "3",
-        onClick: () => {
-          appendText(3);
-        },
-      },
-      {
-        text: "4",
-        onClick: () => {
-          appendText(4);
-        },
-      },
-      {
-        text: "5",
-        onClick: () => {
-          appendText(5);
-        },
-      },
-      {
-        text: "6",
-        onClick: () => {
-          appendText(6);
-        },
-      },
-      {
-        text: "7",
-        onClick: () => {
-          appendText(7);
-        },
-      },
-      {
-        text: "8",
-        onClick: () => {
-          appendText(8);
-        },
-      },
-      {
-        text: "9",
-        onClick: () => {
-          appendText(9);
-        },
-      },
-      {
-        text: ".",
-        onClick: () => {
-          appendText(".");
-        },
-      },
-      {
-        text: "0",
-        onClick: () => {
-          appendText(0);
-        },
-      },
-      {
-        text: "清空",
-        onClick: () => {
-          refAmount.value = "0";
-        },
-      },
-      { text: "提交", onClick: () => {} },
-    ];
-
-    const refDatePickerVisible = ref(false);
-    const showDatePicker = () => (refDatePickerVisible.value = true);
-    const hideDatePicker = () => (refDatePickerVisible.value = false);
-    const setDate = (date: Date) => {
-      refDate.value = date;
-      hideDatePicker();
-    };
-    const refAmount = ref("0");
-
+    const refKind = ref("支出");
     return () => (
-      <>
-        <div class={style.dateAndAmount}>
-          <span class={style.date}>
-            <Icon name="date" class={style.icon} />
-            <span>
-              <span onClick={showDatePicker}>
-                {" "}
-                {time(refDate.value).format()}{" "}
-              </span>
-
-              <Popup
-                position="bottom"
-                v-model:show={refDatePickerVisible.value}
-              >
-                {/* <DatePicker v-model={refDate.value}  
-                            title="请选择日期"
-                            onConfirm={setDate} 
-                            onCancel={hideDatePicker} /> */}
-                <DatetimePicker
-                  value={refDate.value}
-                  type="date"
-                  title="选择年月日"
-                  onConfirm={setDate}
-                  onCancel={hideDatePicker}
-                />
-              </Popup>
-            </span>
-          </span>
-          <span class={style.amount}> {refAmount.value} </span>
-        </div>
-
-        <div class={style.buttons}>
-          {buttons.map((button) => (
-            <button onClick={button.onClick}> {button.text} </button>
-          ))}
-        </div>
-      </>
+      <LayoutNavBar>
+        {{
+          title: () => "记一笔",
+          icon: () => <Icon name="left" class={style.navIcon} />,
+          default: () => (
+            <>
+              <Tabs v-model:selected={refKind.value}>
+                <Tab name="支出">支出列表</Tab>
+                <Tab name="收入">收入列表</Tab>
+              </Tabs>
+              <div class={style.inputPad_wrapper}>
+                <InputPad />
+              </div>
+            </>
+          ),
+        }}
+      </LayoutNavBar>
     );
   },
 });

@@ -1,26 +1,28 @@
-import { defineComponent, ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import { LayoutNavBar } from '../layouts/LayoutNavBar';
-import { Button } from '../shared/buttons/Button';
-import { FloatButton } from '../shared/buttons/FloatButton';
-import { Center } from '../shared/Center';
-import { Icon } from '../shared/Icon';
-import { Navbar } from '../shared/Navbar';
-import { Overlay } from '../shared/Overlay';
-import style from './StartPage.module.scss';
+import { defineComponent, ref } from "vue";
+import { RouterLink } from "vue-router";
+import { LayoutNavBar } from "../layouts/LayoutNavBar";
+import { Button } from "../shared/buttons/Button";
+import { FloatButton } from "../shared/buttons/FloatButton";
+import { Center } from "../shared/Center";
+import { Icon } from "../shared/Icon";
+import { Navbar } from "../shared/Navbar";
+import { Overlay } from "../shared/Overlay";
+import style from "./StartPage.module.scss";
 
-export const StartPage = defineComponent({ 
-  setup : (props,context) => {
+export const StartPage = defineComponent({
+  setup: (props, context) => {
     const refOverlayVisible = ref(false);
     const onClickMenu = () => {
-      refOverlayVisible.value = !refOverlayVisible.value
+      refOverlayVisible.value = !refOverlayVisible.value;
     };
-    
+
     return () => (
       <LayoutNavBar>
         {{
-          title: () => '山竹记账',
-          icon: () => <Icon name="menu" class={style.navIcon} onClick={onClickMenu} />,
+          title: () => "山竹记账",
+          icon: () => (
+            <Icon name="menu" class={style.navIcon} onClick={onClickMenu} />
+          ),
           default: () => (
             <>
               <Center class={style.pig_wrapper}>
@@ -33,7 +35,7 @@ export const StartPage = defineComponent({
                 </RouterLink>
               </div>
               <RouterLink to="/items/create">
-                <FloatButton iconName='add' />
+                <FloatButton iconName="add" />
               </RouterLink>
 
               {/* 
@@ -41,13 +43,13 @@ export const StartPage = defineComponent({
                 <Overlay onClose={() => refOverlayVisible.value = !refOverlayVisible.value} />
               } 等同于：
               */}
-              {refOverlayVisible.value &&
-                <Overlay onClose={() => refOverlayVisible.value = false} />
-              }
+              {refOverlayVisible.value && (
+                <Overlay onClose={() => (refOverlayVisible.value = false)} />
+              )}
             </>
           ),
         }}
       </LayoutNavBar>
-    )
-  }
-})
+    );
+  },
+});

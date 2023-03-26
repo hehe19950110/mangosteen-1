@@ -9,7 +9,7 @@
   margin-top: 8px;
 }
 .formLabel{
-  margin: 10px;
+  margin-left: 10px;
 }
 .formItem {
   min-height: var(--input-min-height);
@@ -38,6 +38,8 @@
     margin-top: 4px;
     color: var(--error-color);
     font-size: 12px;
+    text-align: right;
+    margin-right: 8px;
   }
 }
 

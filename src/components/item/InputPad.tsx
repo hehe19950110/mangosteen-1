@@ -135,8 +135,7 @@ export const InputPad = defineComponent({
             <Icon name="date" class={style.icon} />
             <span>
               <span onClick={showDatePicker}>
-                {" "}
-                {time(refDate.value).format()}{" "}
+                {time(refDate.value).format()}
               </span>
 
               <Popup

@@ -1,4 +1,5 @@
 type EmojiList = [string, string[]][];
+//EmojiList = [][]; 类型是数组中的数组
 export const emojiList: EmojiList = [
   [
     "face-smiling",

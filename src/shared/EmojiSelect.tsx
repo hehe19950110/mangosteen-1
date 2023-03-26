@@ -81,6 +81,7 @@ export const EmojiSelect = defineComponent({
       ],
       ["运动", ["sport", "game"]],
     ];
+
     const onClickTab = (index: number) => {
       refSelected.value = index;
     };
@@ -102,6 +103,7 @@ export const EmojiSelect = defineComponent({
           ))
       );
     });
+
     return () => (
       <div class={style.emojiList}>
         <nav>

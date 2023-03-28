@@ -13,14 +13,13 @@
 
   --button-bg: #6a48c5;
   --button-bg-danger: #E10505;
-  --button-bg-important: #6a48c5;
   --button-border-color: #ddd;
   --button-text:var(--welcome-text);
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
-  --floatbutton-icon-bg: #6a48c5;
-  --floatbutton-icon-text:white;;
+  --floatbutton-bg: #6a48c5;
+  --floatbutton-text:white;;
 
   --navbar-bg-start: #5e3bbb;
   --navbar-bg-end: #9867cf;
@@ -51,6 +50,16 @@
   --emoji-nav-text: #999;
   --error-color: #E10505;
 
+  --bg: white;
   --tag-bg: #EFEFEF;
+
+  --list-tag-text: #333;
+  --list-amount-text: var(--amount-text);
+  --list-time-text: var(--date-text);
+
+  --total-bg: #252A43;
+  --total-text: white;
+  --total-income: #e36b6d;
+  --total-expenses: #53A867;
 
 }

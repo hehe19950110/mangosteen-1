@@ -1,18 +1,10 @@
 import { defineComponent, PropType, reactive } from "vue";
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
-import { Button } from "../../shared/buttons/Button";
-import { EmojiSelect } from "../../shared/EmojiSelect";
 import { Icon } from "../../shared/Icon";
 import { Rules, validate } from "../../shared/validate";
-import style from "./Tag.module.scss";
 import { TagForm } from "./TagForm";
 
 export const TagCreate = defineComponent({
-  props: {
-    name: {
-      type: String as PropType<string>,
-    },
-  },
   setup: (props, context) => {
     const formData = reactive({
       name: "",

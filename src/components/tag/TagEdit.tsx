@@ -1,4 +1,4 @@
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, reactive } from "vue";
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
 import { Button } from "../../shared/buttons/Button";
 import { Icon } from "../../shared/Icon";

@@ -1,17 +1,13 @@
-import { defineComponent, PropType  } from 'vue';
-import { RouterView } from 'vue-router';
-import style from './ItemPage.module.scss';
+import { defineComponent, PropType } from "vue";
+import { RouterView } from "vue-router";
 
-export const ItemPage = defineComponent({ 
+export const ItemPage = defineComponent({
   props: {
     name: {
-      type: String as PropType<string>
-    }
+      type: String as PropType<string>,
+    },
   },
   setup: (props, context) => {
-    return () => (
-      <RouterView />
-    )
-  }
-})
-
+    return () => <RouterView />;
+  },
+});

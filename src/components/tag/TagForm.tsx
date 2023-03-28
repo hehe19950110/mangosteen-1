@@ -1,6 +1,6 @@
 import { defineComponent, PropType, reactive } from "vue";
 import { Button } from "../../shared/buttons/Button";
-import { EmojiSelect } from "../../shared/EmojiSelect";
+import { Form, FormItem } from "../../shared/Form";
 import { Rules, validate } from "../../shared/validate";
 import style from "./Tag.module.scss";
 
@@ -36,45 +36,29 @@ export const TagForm = defineComponent({
     };
 
     return () => (
-      <form class={style.form} onSubmit={onSubmit}>
-        <div class={style.formRow}>
-          <label class={style.formLabel}>
-            <span class={style.formItem_name}>标签名</span>
-            <div class={style.formItem_value}>
-              <input
-                v-model={formData.name}
-                class={[style.formItem, style.input, style.error]}
-              ></input>
-            </div>
-            <div class={style.formItem_errorHint}>
-              <span>{errors["name"] ? errors["name"][0] : "　"}</span>
-            </div>
-          </label>
-        </div>
+      <Form onSubmit={onSubmit}>
+        <FormItem
+          label="标签名"
+          type="text"
+          v-model={formData.name}
+          error={errors["name"] ? errors["name"][0] : "　"}
+        />
 
-        <div class={style.formRow}>
-          <label class={style.formLabel}>
-            <span class={style.formItem_name}>符号 {formData.sign}</span>
-            <div class={style.formItem_value}>
-              <EmojiSelect
-                v-model={formData.sign}
-                class={[style.formItem, style.emojiList, style.error]}
-              />
-            </div>
-            <div class={style.formItem_errorHint}>
-              <span>{errors["sign"] ? errors["sign"][0] : "　"}</span>
-            </div>
-          </label>
-        </div>
+        <FormItem
+          label={"符号 " + formData.sign}
+          type="emojiSelect"
+          v-model={formData.sign}
+          error={errors["sign"] ? errors["sign"][0] : "　"}
+        />
 
-        <p class={style.tips}>记账时长按标签即可进行编辑</p>
+        <FormItem>
+          <p class={style.tips}>记账时长按标签即可进行编辑</p>
+        </FormItem>
 
-        <div class={style.formRow}>
-          <div class={style.formItem_value}>
-            <Button class={[style.formItem, style.button]}>确定</Button>
-          </div>
-        </div>
-      </form>
+        <FormItem>
+          <Button class={[style.button]}>确定</Button>
+        </FormItem>
+      </Form>
     );
   },
 });

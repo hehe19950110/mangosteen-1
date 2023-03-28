@@ -1,5 +1,5 @@
 .floatButton {
-  background: var(--floatbutton-icon-bg);
+  background: var(--floatbutton-bg);
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -11,7 +11,7 @@
   right: 16px;
 
   .icon{
-    fill: var(--floatbutton-icon-text);
+    fill: var(--floatbutton-text);
     width: 30px;
     height: 30px;
   }

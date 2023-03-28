@@ -25,11 +25,11 @@ export const Tabs = defineComponent({
           throw new Error("<Tabs> only accepts <Tab> as children");
         }
       }
-      const cp = props.classPrefix;
 
+      const cp = props.classPrefix;
       return (
-        <div class={(style.tabs, cp + "_tabs")}>
-          <ol class={(style.tabs_nav, cp + "_tabs_nav")}>
+        <div class={[style.tabs, cp + "_tabs"]}>
+          <ol class={[style.tabs_nav, cp + "_tabs_nav"]}>
             {tabs.map((item) => (
               <li
                 class={[

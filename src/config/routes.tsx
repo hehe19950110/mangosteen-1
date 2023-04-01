@@ -8,13 +8,13 @@ import { SecondActions } from "../components/welcome/SecondActions";
 import { Third } from "../components/welcome/Third";
 import { ThirdActions } from "../components/welcome/ThirdActions";
 import { ItemCreate } from "../components/item/ItemCreate";
+import { TagCreate } from "../components/tag/TagCreate";
+import { TagEdit } from "../components/tag/TagEdit";
 import { ItemList } from "../components/item/ItemList";
 import { ItemPage } from "../pages/ItemPage";
 import { StartPage } from "../pages/StartPage";
 import { WelcomePage } from "../pages/WelcomePage";
 import { TagPage } from "../pages/TagPage";
-import { TagCreate } from "../components/tag/TagCreate";
-import { TagEdit } from "../components/tag/TagEdit";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },

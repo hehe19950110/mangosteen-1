@@ -8,6 +8,7 @@
 
   --z-index-bottom-nav: 9; 
   --z-index-overlay: 19;
+  --z-index-navbar: 32;
 
   --transition-duration: 0.5s;
 
@@ -57,9 +58,9 @@
   --list-amount-text: var(--amount-text);
   --list-time-text: var(--date-text);
 
-  --total-bg: #252A43;
+  --total-bg: #45294a;
   --total-text: white;
-  --total-income: #e36b6d;
-  --total-expenses: #53A867;
+  --total-income: #e4ca08;
+  --total-expenses: #ea2b19;
 
 }

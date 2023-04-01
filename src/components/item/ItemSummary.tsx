@@ -20,111 +20,110 @@ export const ItemSummary = defineComponent({
         <ul class={style.total}>
           <li>
             <span>收入</span>
-            <span>128</span>
+            <span>100</span>
           </li>
           <li>
             <span>支出</span>
-            <span>99</span>
+            <span>109</span>
           </li>
           <li>
             <span>净收入</span>
-            <span>39</span>
+            <span>-9</span>
           </li>
         </ul>
 
         <ol class={style.list}>
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>购物</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>旅行</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>旅行</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>购物</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>旅行</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>购物</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
 
           <li>
             <div class={style.sign}>
-              <span> X </span>
+              <span> ￥ </span>
             </div>
             <div class={style.text}>
               <div class={style.tagAndAmount}>
-                <span class={style.tag}>旅行</span>
+                <span class={style.tag}>工资</span>
                 <span class={style.amount}>￥1234</span>
               </div>
-              <div class={style.time}>2000-01-01 12:39</div>
+              <div class={style.time}>2020-01-01 12:00</div>
             </div>
           </li>
         </ol>
-
         <div class={style.more}>向下滑动加载更多</div>
         <FloatButton iconName="add" />
       </div>

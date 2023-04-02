@@ -7,9 +7,11 @@ export const EmojiSelect = defineComponent({
     modelValue: {
       type: String,
     },
+    // 定义 onUpdateModelValue 的类型
     onUpdateModelValue: {
       type: Function as PropType<(emoji: string) => void>,
     },
+    //emits: ["update:modelValue"],
   },
 
   setup: (props, context) => {
@@ -90,6 +92,7 @@ export const EmojiSelect = defineComponent({
       refSelected.value = index;
     };
     const onClickEmoji = (emoji: string) => {
+      //如果 onUpdateModelValue 传了props ，就不去 emit ；如果没传 props，就去 emit
       if (props.onUpdateModelValue) {
         props.onUpdateModelValue(emoji);
       } else {

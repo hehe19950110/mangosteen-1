@@ -124,6 +124,7 @@ export const ItemSummary = defineComponent({
             </div>
           </li>
         </ol>
+
         <div class={style.more}>向下滑动加载更多</div>
         <FloatButton iconName="add" />
       </div>

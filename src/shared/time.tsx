@@ -21,8 +21,8 @@ export class Time {
       .replace(/SSS/, msecond.toString().padStart(3, "0"));
   }
   firstDayOfMonth() {
-    return new Time(
-      new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0)
+    return new Time( //创建一个新的时间，新的时间用new Date（）来构造
+      new Date(this.date.getFullYear(), this.date.getMonth(), 1, 0, 0, 0) //获取到当前日期的年月日
     );
   }
   firstDayOfYear() {
@@ -30,11 +30,11 @@ export class Time {
   }
   lastDayOfMonth() {
     return new Time(
-      new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0)
+      new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0, 0, 0, 0) // 月份＋1，日期变成0
     );
   }
   lastDayOfYear() {
-    return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0));
+    return new Time(new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0)); // 年份＋1，日期变成0
   }
   getRaw() {
     return this.date;
@@ -67,11 +67,12 @@ export class Time {
         ).getDate();
         date.setDate(Math.min(currentDate, targetDate));
         break;
-      case "month":
-        const d = date.getDate();
-        date.setDate(1);
-        date.setMonth(date.getMonth() + amount);
-        const d2 = new Date(
+
+      case "month": // 需要考虑闰年闰月的情况
+        const d = date.getDate(); //假设日期是 1.31
+        date.setDate(1); // 将日期设成1号，即1.31 变成 1.1
+        date.setMonth(date.getMonth() + amount); // 月份＋1，即 2.1
+        const d2 = new Date( // 需要知道1月的最后一天是几号，然后 ＋1月后 得到2.28 或者 2.29
           date.getFullYear(),
           date.getMonth() + 1,
           0,
@@ -79,20 +80,25 @@ export class Time {
           0,
           0
         ).getDate();
-        date.setDate(Math.min(d, d2));
+        date.setDate(Math.min(d, d2)); // 需要判断 d 和 d2 哪一个小，用哪一个
         break;
+
       case "day":
         date.setDate(date.getDate() + amount);
         break;
+
       case "hour":
         date.setHours(date.getHours() + amount);
         break;
+
       case "minute":
         date.setMinutes(date.getMinutes() + amount);
         break;
+
       case "second":
         date.setSeconds(date.getSeconds() + amount);
         break;
+
       case "millisecond":
         date.setMilliseconds(date.getMilliseconds() + amount);
         break;

@@ -5,7 +5,7 @@ export const Tabs = defineComponent({
   props: {
     classPrefix: {
       type: String,
-    },
+    }, // 可以加到 每一个自定义样式的格式上
     selected: {
       type: String as PropType<string>,
       required: false,

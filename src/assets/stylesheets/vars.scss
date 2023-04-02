@@ -13,7 +13,7 @@
   --transition-duration: 0.5s;
 
   --button-bg: #6a48c5;
-  --button-bg-danger: #E10505;
+  --button-bg-danger: #f02727;
   --button-border-color: #ddd;
   --button-text:var(--welcome-text);
   --button-font-size: 18px;
@@ -62,5 +62,7 @@
   --total-text: white;
   --total-income: #e4ca08;
   --total-expenses: #ea2b19;
+
+  --dialog-header-text: white;
 
 }

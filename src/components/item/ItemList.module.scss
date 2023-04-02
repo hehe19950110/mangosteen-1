@@ -18,10 +18,9 @@
   text-align: right;
   button {
     border: none;
-    background: transparent;
+    background: rgba(84, 9, 150, 0.25);
+    border-radius: 8px;
+    margin-left: 8px;
     padding: 8px 16px;
-    & + & {
-      margin-left: 16px;
-    }
   }
 }

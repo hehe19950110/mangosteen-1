@@ -13,19 +13,23 @@ export const ItemList = defineComponent({
     const refSelected = ref("本月");
     const time = new Time();
     const customTime = reactive({
+      // 设定自定义时间是一个字符串：
       start: new Time().format(),
       end: new Time().format(),
     });
     const timeList = [
       {
+        // 本月：
         start: time.firstDayOfMonth(),
         end: time.lastDayOfMonth(),
       },
       {
+        // 上月：
         start: time.add(-1, "month").firstDayOfMonth(),
         end: time.add(-1, "month").lastDayOfMonth(),
       },
       {
+        // 今年：
         start: time.firstDayOfYear(),
         end: time.lastDayOfYear(),
       },
@@ -81,6 +85,7 @@ export const ItemList = defineComponent({
                 </Tab>
               </Tabs>
 
+              {/*使用 vant 的 Overlay组件 实现自定义时间部分的弹窗对话框:*/}
               <Overlay show={refOverlayVisible.value} class={style.overlay}>
                 <div class={style.overlay_inner}>
                   <header>请选择时间</header>
@@ -91,13 +96,17 @@ export const ItemList = defineComponent({
                         v-model={customTime.start}
                         type="date"
                       />
-
                       <FormItem
                         label="结束时间"
                         v-model={customTime.end}
                         type="date"
                       />
 
+                      {/*
+                     假设 上面的 FormItem标签 可以回车， 
+                     那么 Form 标签默认 会在任何一个 FormItem标签 回车时，会自动触发 type是"submit" 的 button按钮，
+                     所以 有多个button时，需要区分的type来实现不同的指令。
+                     */}
                       <FormItem>
                         <div class={style.actions}>
                           <button type="button">取消</button>

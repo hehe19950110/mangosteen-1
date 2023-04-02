@@ -9,15 +9,15 @@ export const Button = defineComponent({
     level: {
       type: String as PropType<"important" | "normal" | "danger">,
       default: "important",
-    },
+    }, // 默认级别：重要
     type: {
       type: String as PropType<"submit" | "button">,
-    },
+    }, // 明确指定 type的值是"submit" | "button"，不要使用默认值
   },
 
   setup: (props, context) => {
     return () => (
-      <button class={[style.button, style[props.level]]}>
+      <button type={props.type} class={[style.button, style[props.level]]}>
         {context.slots.default?.()}
       </button>
     );

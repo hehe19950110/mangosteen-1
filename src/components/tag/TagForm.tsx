@@ -37,6 +37,7 @@ export const TagForm = defineComponent({
 
     return () => (
       <Form onSubmit={onSubmit}>
+        {/* FormItem里，内容是自定义的，就不需要写type，如 <p>里 写的固定提示语 */}
         <FormItem
           label="标签名"
           type="text"

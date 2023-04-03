@@ -153,7 +153,7 @@ export const InputPad = defineComponent({
             </span>
           </span>
 
-          <span class={style.amount}> {refAmount.value} </span>
+          <span class={style.amount}>{refAmount.value}</span>
         </div>
 
         <div class={style.buttons}>

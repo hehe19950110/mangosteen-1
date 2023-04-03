@@ -35,6 +35,7 @@ export const FormItem = defineComponent({
       type: String,
     },
   },
+  emits: ["update:modelValue"],
 
   setup: (props, context) => {
     const refDateVisible = ref(false);
@@ -80,7 +81,6 @@ export const FormItem = defineComponent({
                 }}
                 class={[style.formItem, style.input]}
               />
-
               {/*
                 <input>里的 value={props.modelValue} 与 <Popup - DatetimePicker> 里的 value={props.modelValue} 展示的是同一个值；
                 onConfirm 确认的时候 就把这个值输出去， 同时 关掉 Popup；

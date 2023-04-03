@@ -7,11 +7,11 @@ export const EmojiSelect = defineComponent({
     modelValue: {
       type: String,
     },
-    // 定义 onUpdateModelValue 的类型
+
+    // 定义 onUpdateModelValue 的类型:
     onUpdateModelValue: {
       type: Function as PropType<(emoji: string) => void>,
     },
-    //emits: ["update:modelValue"],
   },
 
   setup: (props, context) => {

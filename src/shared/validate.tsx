@@ -26,6 +26,7 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
           errors[key]?.push(message);
         }
         break;
+
       case "pattern":
         //if (value && !rule.regex.test(value.toString())) {
         if (!isEmpty(value) && !rule.regex.test(value!.toString())) {
@@ -33,6 +34,7 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
           errors[key]?.push(message);
         }
         break;
+
       default:
         return;
     }

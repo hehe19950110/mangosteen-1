@@ -3,6 +3,7 @@ import { defineComponent, reactive, ref, watchEffect } from "vue";
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
 import { Form, FormItem } from "../../shared/Form";
 import { Icon } from "../../shared/Icon";
+import { OverlayIcon } from "../../shared/Overlay";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { Time } from "../../shared/time";
 import style from "./ItemList.module.scss";
@@ -54,7 +55,7 @@ export const ItemList = defineComponent({
       <LayoutNavBar>
         {{
           title: () => "山竹记账",
-          icon: () => <Icon name="menu" />,
+          icon: () => <OverlayIcon />,
           default: () => (
             <>
               <Tabs

@@ -5,23 +5,16 @@ import { Button } from "../shared/buttons/Button";
 import { FloatButton } from "../shared/buttons/FloatButton";
 import { Center } from "../shared/Center";
 import { Icon } from "../shared/Icon";
-import { Overlay } from "../shared/Overlay";
+import { Overlay, OverlayIcon } from "../shared/Overlay";
 import style from "./StartPage.module.scss";
 
 export const StartPage = defineComponent({
   setup: (props, context) => {
-    const refOverlayVisible = ref(false);
-    const onClickMenu = () => {
-      refOverlayVisible.value = !refOverlayVisible.value;
-    };
-
     return () => (
       <LayoutNavBar>
         {{
           title: () => "山竹记账",
-          icon: () => (
-            <Icon name="menu" class={style.navIcon} onClick={onClickMenu} />
-          ),
+          icon: () => <OverlayIcon />,
           default: () => (
             <>
               <Center class={style.pig_wrapper}>
@@ -41,10 +34,11 @@ export const StartPage = defineComponent({
               {refOverlayVisible.value &&
                 <Overlay onClose={() => refOverlayVisible.value = !refOverlayVisible.value} />
               } 等同于：
-              */}
+              
               {refOverlayVisible.value && (
                 <Overlay onClose={() => (refOverlayVisible.value = false)} />
               )}
+              */}
             </>
           ),
         }}

@@ -16,6 +16,7 @@ import { StartPage } from "../pages/StartPage";
 import { WelcomePage } from "../pages/WelcomePage";
 import { TagPage } from "../pages/TagPage";
 import { SignInPage } from "../pages/SignInPage";
+import { StatisticsPage } from "../pages/StatisticsPage";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
@@ -66,5 +67,9 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/sign_in",
     component: SignInPage,
+  },
+  {
+    path: "/statistics",
+    component: StatisticsPage,
   },
 ];

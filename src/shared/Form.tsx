@@ -31,13 +31,14 @@ export const FormItem = defineComponent({
     },
     type: {
       type: String as PropType<
-        "text" | "emojiSelect" | "date" | "validationCode"
+        "text" | "emojiSelect" | "date" | "validationCode" | "select"
       >,
     },
     error: {
       type: String,
     },
     placeholder: String,
+    options: Array as PropType<Array<{ value: string; text: string }>>,
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
@@ -144,6 +145,22 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
                 发送验证码
               </Button>
             </>
+          );
+
+        // 如果 type 是 select，那么 content 可以监听 onchange 事件， 更新事件名为 modelValue 的 option 变量
+        case "select":
+          return (
+            <select
+              class={[style.formItem, style.select]}
+              value={props.modelValue}
+              onChange={(e: any) => {
+                context.emit("update:modelValue", e.target.value);
+              }}
+            >
+              {props.options?.map((option) => (
+                <option value={option.value}>{option.text}</option>
+              ))}
+            </select>
           );
 
         // 如果 type 没写，那么 直接展出插槽 context.slots.default?.();

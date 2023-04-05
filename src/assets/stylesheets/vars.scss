@@ -8,7 +8,8 @@
 
   --z-index-bottom-nav: 9; 
   --z-index-overlay: 19;
-  --z-index-navbar: 39;
+  --z-index-navbar: 32;
+  --van-overlay-z-index: 64;
 
   --transition-duration: 0.5s;
 
@@ -66,5 +67,6 @@
   --dialog-header-text: white;
 
   --text:#333;
+  --app-name-text: #5e3bbb;
 
 }

@@ -1,5 +1,6 @@
 import { DatetimePicker, Popup } from "vant";
 import { computed, defineComponent, PropType, ref } from "vue";
+import { Button } from "./buttons/Button";
 import { EmojiSelect } from "./EmojiSelect";
 import style from "./Form.module.scss";
 import { Time } from "./time";
@@ -29,13 +30,35 @@ export const FormItem = defineComponent({
       type: [String, Number],
     },
     type: {
-      type: String as PropType<"text" | "emojiSelect" | "date">,
+      type: String as PropType<
+        "text" | "emojiSelect" | "date" | "validationCode"
+      >,
     },
     error: {
       type: String,
     },
+    placeholder: String,
   },
   emits: ["update:modelValue"],
+  /*     v-model 中 "update:modelValue"
+vue中子传父参数的方法共有两种：
+1、子组件通过emit传输
+2、通过自定义组件传输
+
+vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也不再是input，而是update:modelValue
+指的是 “发射” 一个修改 props 的通知，告诉父组件自己去修改 props
+  export default {
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    setup(props, { emit }) {
+      return () =>
+        h(SomeComponent, {
+          modelValue: props.modelValue,
+          'onUpdate:modelValue': (value) => emit('update:modelValue', value)
+        })
+    }
+  }
+*/
 
   setup: (props, context) => {
     const refDateVisible = ref(false);
@@ -46,6 +69,7 @@ export const FormItem = defineComponent({
           return (
             <input
               value={props.modelValue}
+              placeholder={props.placeholder}
               onInput={(e: any) =>
                 context.emit("update:modelValue", e.target.value)
               }
@@ -75,6 +99,7 @@ export const FormItem = defineComponent({
               <input
                 readonly={true}
                 value={props.modelValue}
+                placeholder={props.placeholder}
                 onClick={() => {
                   // 点击时，调出 弹窗时间框
                   refDateVisible.value = true;
@@ -101,6 +126,26 @@ export const FormItem = defineComponent({
             </>
           );
 
+        // 如果 type 是 validationCode，那么 content 就是 验证码输入码框 与 发送验证的button 组合。
+        case "validationCode":
+          return (
+            <>
+              <input
+                class={[style.formItem, style.input, style.validationCodeInput]}
+                placeholder={props.placeholder}
+              />
+              <Button
+                class={[
+                  style.formItem,
+                  style.button,
+                  style.validationCodeButton,
+                ]}
+              >
+                发送验证码
+              </Button>
+            </>
+          );
+
         // 如果 type 没写，那么 直接展出插槽 context.slots.default?.();
         case undefined:
           return context.slots.default?.();
@@ -114,12 +159,19 @@ export const FormItem = defineComponent({
             {props.label && (
               <span class={style.formItem_name}>{props.label}</span>
             )}
-
             <div class={style.formItem_value}>{content.value}</div>
-
+            {/* 如果error存在 就展示error 
+                {props.error && (
+                  <div class={style.formItem_errorHint}>
+                    <span>{props.error ?? " "}</span>
+                  </div>
+                )}
+                更改为 一直展示error:
+                <span>{props.error ?? " "}</span>
+            */}
             {props.error && (
               <div class={style.formItem_errorHint}>
-                <span>{props.error}</span>
+                <span>{props.error ?? " "}</span>
               </div>
             )}
           </label>

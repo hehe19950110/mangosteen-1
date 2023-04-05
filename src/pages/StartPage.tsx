@@ -29,16 +29,6 @@ export const StartPage = defineComponent({
               <RouterLink to="/items/create">
                 <FloatButton iconName="add" />
               </RouterLink>
-
-              {/* 
-              {refOverlayVisible.value &&
-                <Overlay onClose={() => refOverlayVisible.value = !refOverlayVisible.value} />
-              } 等同于：
-              
-              {refOverlayVisible.value && (
-                <Overlay onClose={() => (refOverlayVisible.value = false)} />
-              )}
-              */}
             </>
           ),
         }}

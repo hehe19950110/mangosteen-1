@@ -42,14 +42,14 @@ export const TagForm = defineComponent({
           label="标签名"
           type="text"
           v-model={formData.name}
-          error={errors["name"] ? errors["name"][0] : "　"}
+          error={errors["name"]?.[0]}
         />
 
         <FormItem
           label={"符号 " + formData.sign}
           type="emojiSelect"
           v-model={formData.sign}
-          error={errors["sign"] ? errors["sign"][0] : "　"}
+          error={errors["sign"]?.[0]}
         />
 
         <FormItem>

@@ -23,6 +23,9 @@
   padding: 22px 16px;
   background: var(--overlay-user-bg);
   color: var(--overlay-user-text);
+  p {
+    margin-top: 10px;
+  }
 };
 
 .action {

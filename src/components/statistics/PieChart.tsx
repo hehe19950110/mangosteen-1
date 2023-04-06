@@ -14,9 +14,9 @@ export const PieChart = defineComponent({
       if (refDiv2.value === undefined) {
         return;
       }
-      // 初始化 echarts 实例：
+      // 初始化 echarts 数据：
       var myChart = echarts.init(refDiv2.value);
-      // 绘制图表：
+      // 绘制图表（直接在 echarts 里找模板）：
       const option = {
         grid: [{ left: 0, top: 0, right: 0, bottom: 20 }],
         series: [
@@ -43,6 +43,7 @@ export const PieChart = defineComponent({
       };
       myChart.setOption(option);
     });
+
     return () => <div ref={refDiv2} class={style.wrapper}></div>;
   },
 });

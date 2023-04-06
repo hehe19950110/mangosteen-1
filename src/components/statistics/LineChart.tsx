@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import * as echarts from "echarts";
 import style from "./LineChart.module.scss";
 
@@ -9,9 +9,10 @@ export const LineChart = defineComponent({
       if (refDiv.value === undefined) {
         return;
       }
-      // 初始化 echarts 实例：
+
+      // 初始化 echarts 数据：
       var myChart = echarts.init(refDiv.value);
-      // 绘制图表：
+      // 绘制图表（直接在 echarts 里找模板）
       myChart.setOption({
         grid: [{ left: 0, top: 0, right: 0, bottom: 20 }],
         xAxis: {

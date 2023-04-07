@@ -39,6 +39,7 @@ export const FormItem = defineComponent({
     },
     placeholder: String,
     options: Array as PropType<Array<{ value: string; text: string }>>,
+    onClick: Function as PropType<() => void>,
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
@@ -136,6 +137,7 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
                 placeholder={props.placeholder}
               />
               <Button
+                onClick={props.onClick}
                 class={[
                   style.formItem,
                   style.button,

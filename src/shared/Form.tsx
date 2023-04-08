@@ -3,6 +3,7 @@ import { computed, defineComponent, PropType, ref } from "vue";
 import { Button } from "./buttons/Button";
 import { EmojiSelect } from "./EmojiSelect";
 import style from "./Form.module.scss";
+import { getFriendlyError } from "./getFrendlyError";
 import { Time } from "./time";
 
 export const Form = defineComponent({
@@ -40,6 +41,10 @@ export const FormItem = defineComponent({
     placeholder: String,
     options: Array as PropType<Array<{ value: string; text: string }>>,
     onClick: Function as PropType<() => void>,
+    countFrom: {
+      type: Number,
+      default: 60,
+    },
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
@@ -64,6 +69,20 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
 
   setup: (props, context) => {
     const refDateVisible = ref(false);
+    const timer = ref<number>();
+    const count = ref<number>(props.countFrom);
+    const isCounting = computed(() => !!timer.value);
+    const startCount = () =>
+      (timer.value = setInterval(() => {
+        count.value -= 1;
+        if (count.value === 0) {
+          clearInterval(timer.value);
+          timer.value = undefined;
+          count.value = props.countFrom;
+        }
+      }, 1000));
+    context.expose({ startCount });
+
     const content = computed(() => {
       switch (props.type) {
         // 如果 type 是 text，那么 content 就是 return 出 <input>
@@ -137,6 +156,7 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
                 placeholder={props.placeholder}
               />
               <Button
+                disabled={isCounting.value}
                 onClick={props.onClick}
                 class={[
                   style.formItem,
@@ -144,7 +164,9 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
                   style.validationCodeButton,
                 ]}
               >
-                发送验证码
+                {isCounting.value
+                  ? `${count.value}秒后可重新发送`
+                  : "发送验证码"}
               </Button>
             </>
           );
@@ -190,7 +212,9 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
             */}
             {props.error && (
               <div class={style.formItem_errorHint}>
-                <span>{props.error ?? " "}</span>
+                <span>
+                  {props.error ? getFriendlyError(props.error) : "　"}
+                </span>
               </div>
             )}
           </label>

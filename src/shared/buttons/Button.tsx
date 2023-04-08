@@ -12,12 +12,18 @@ export const Button = defineComponent({
     }, // 默认级别：重要
     type: {
       type: String as PropType<"submit" | "button">,
-    }, // 明确指定 type的值是"submit" | "button"，不要使用默认值
+      default: "buttonß",
+    }, // 明确指定 type的值是"submit" | "button"，默认值是button
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   setup: (props, context) => {
     return () => (
       <button
+        disabled={props.disabled}
         type={props.type}
         class={[style.button, style[props.level]]}
         onClick={props.onClick}

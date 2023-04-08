@@ -1,10 +1,12 @@
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import { LayoutNavBar } from "../layouts/LayoutNavBar";
 import { Button } from "../shared/buttons/Button";
 import { Form, FormItem } from "../shared/Form";
 import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
 import style from "./SignInPage.module.scss";
+import axios, { AxiosResponse } from "axios";
+import { http } from "../shared/Http";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -40,9 +42,21 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+    const onError = (error: any) => {
+      if (error.response.status === 422) {
+        Object.assign(errors, error.response.data.errors);
+      }
+      throw error;
+    };
 
-    const onClickSendValidationCode = () => {
-      console.log("1111");
+    const refValidationCode = ref<any>();
+    const onClickSendValidationCode = async () => {
+      // const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
+      const response = await http
+        .post("/validation_codes", { email: formData.email })
+        .catch(onError);
+      // 成功
+      refValidationCode.value.startCount();
     };
 
     return () => (
@@ -67,9 +81,11 @@ export const SignInPage = defineComponent({
                 />
 
                 <FormItem
+                  ref={refValidationCode}
                   label="验证码"
                   type="validationCode"
                   placeholder="请输入六位数字"
+                  countFrom={1}
                   onClick={onClickSendValidationCode}
                   v-model={formData.code}
                   error={errors.code?.[0]}

@@ -6,7 +6,7 @@ import { Icon } from "../shared/Icon";
 import { validate } from "../shared/validate";
 import style from "./SignInPage.module.scss";
 import axios, { AxiosResponse } from "axios";
-import { http } from "../shared/Http";
+import { http } from "../shared/HttpClient";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -18,6 +18,14 @@ export const SignInPage = defineComponent({
       email: [],
       code: [],
     });
+
+    const refValidationCode = ref<any>();
+    const onClickSendValidationCode = async () => {
+      const response = await http
+        .post("/validation_codes", { email: formData.email })
+        .catch(onError); // 有业务逻辑需要处理，所以 需要加 .catch()
+      refValidationCode.value.startCount();
+    };
 
     //效验规则：
     const onSubmit = (e: Event) => {
@@ -42,21 +50,12 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+
     const onError = (error: any) => {
       if (error.response.status === 422) {
         Object.assign(errors, error.response.data.errors);
       }
       throw error;
-    };
-
-    const refValidationCode = ref<any>();
-    const onClickSendValidationCode = async () => {
-      // const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
-      const response = await http
-        .post("/validation_codes", { email: formData.email })
-        .catch(onError);
-      // 成功
-      refValidationCode.value.startCount();
     };
 
     return () => (
@@ -85,7 +84,7 @@ export const SignInPage = defineComponent({
                   label="验证码"
                   type="validationCode"
                   placeholder="请输入六位数字"
-                  countFrom={1}
+                  countFrom={3}
                   onClick={onClickSendValidationCode}
                   v-model={formData.code}
                   error={errors.code?.[0]}

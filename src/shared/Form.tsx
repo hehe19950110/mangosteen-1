@@ -12,7 +12,6 @@ export const Form = defineComponent({
       type: Function as PropType<(e: Event) => void>,
     },
   },
-
   setup: (props, context) => {
     return () => (
       <form class={style.form} onSubmit={props.onSubmit}>
@@ -44,7 +43,7 @@ export const FormItem = defineComponent({
     countFrom: {
       type: Number,
       default: 60,
-    },
+    }, // 默认值是60
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
@@ -69,19 +68,28 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
 
   setup: (props, context) => {
     const refDateVisible = ref(false);
+
+    /*倒计时：
+    状态1：点击发送                      timer 不为空 就是状态2 
+    状态2：
+          60 ——> 0                     count
+          disable true ——> falsse 
+    结束后
+    又恢复到发送 状态1
+    */
     const timer = ref<number>();
     const count = ref<number>(props.countFrom);
-    const isCounting = computed(() => !!timer.value);
+    const isCounting = computed(() => !!timer.value); // 判断是否在倒计时
     const startCount = () =>
       (timer.value = setInterval(() => {
         count.value -= 1;
         if (count.value === 0) {
-          clearInterval(timer.value);
-          timer.value = undefined;
-          count.value = props.countFrom;
+          clearInterval(timer.value); // 等于0时，清空倒计时
+          timer.value = undefined; // 置空timer.value，让 isCounting 进入判断
+          count.value = props.countFrom; // 把 count.value 重新归置为 默认值60
         }
       }, 1000));
-    context.expose({ startCount });
+    context.expose({ startCount: startCount });
 
     const content = computed(() => {
       switch (props.type) {

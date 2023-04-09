@@ -44,6 +44,7 @@ export const FormItem = defineComponent({
       type: Number,
       default: 60,
     }, // 默认值是60
+    disabled: Boolean,
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
@@ -164,7 +165,7 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
                 placeholder={props.placeholder}
               />
               <Button
-                disabled={isCounting.value}
+                disabled={isCounting.value || props.disabled}
                 onClick={props.onClick}
                 class={[
                   style.formItem,

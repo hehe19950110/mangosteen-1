@@ -7,6 +7,7 @@ import { validate } from "../shared/validate";
 import style from "./SignInPage.module.scss";
 import axios, { AxiosResponse } from "axios";
 import { http } from "../shared/HttpClient";
+import { useBoolean } from "../hooks/useBoolean";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -21,9 +22,12 @@ export const SignInPage = defineComponent({
 
     const refValidationCode = ref<any>();
     const onClickSendValidationCode = async () => {
+      disabled(); // 把 布尔值 变成 TRUE; on: disabled,  on: () => (bool.value = true),
       const response = await http
         .post("/validation_codes", { email: formData.email })
-        .catch(onError); // 有业务逻辑需要处理，所以 需要加 .catch()
+        .catch(onError) // 有业务逻辑需要处理，所以 需要加 .catch()
+        .finally(enable); // 失败了 也需要把 布尔值 变成 FALSE; off: enable,  off: () => (bool.value = false),
+      // 成功
       refValidationCode.value.startCount();
     };
 
@@ -50,6 +54,12 @@ export const SignInPage = defineComponent({
         ])
       );
     };
+    const {
+      ref: refDisabled,
+      toggle,
+      on: disabled,
+      off: enable,
+    } = useBoolean(false);
 
     const onError = (error: any) => {
       if (error.response.status === 422) {
@@ -85,6 +95,7 @@ export const SignInPage = defineComponent({
                   type="validationCode"
                   placeholder="请输入六位数字"
                   countFrom={3}
+                  disabled={refDisabled.value}
                   onClick={onClickSendValidationCode}
                   v-model={formData.code}
                   error={errors.code?.[0]}

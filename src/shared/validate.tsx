@@ -45,3 +45,18 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
 function isEmpty(value: null | undefined | string | number | FData) {
   return value === null || value === undefined || value === "";
 }
+
+export function hasError(errors: Record<string, string[]>) {
+  // errors 的类型是Record， key 是 string ，value 是 string[]
+  // return Object.values(errors)
+  // .reduce((result, value) => result + value.length, 0) > 0
+  let result = false;
+  for (let key in errors) {
+    if (errors[key].length > 0) {
+      // 只要每一个 key 对应的 value 的长度 大于0
+      result = true;
+      break;
+    }
+  }
+  return result;
+}

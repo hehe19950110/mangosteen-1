@@ -163,6 +163,10 @@ vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也
               <input
                 class={[style.formItem, style.input, style.validationCodeInput]}
                 placeholder={props.placeholder}
+                value={props.modelValue}
+                onInput={(e: any) =>
+                  context.emit("update:modelValue", e.target.value)
+                }
               />
               <Button
                 disabled={isCounting.value || props.disabled}

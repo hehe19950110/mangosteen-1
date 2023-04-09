@@ -11,7 +11,7 @@ import { http } from "../shared/HttpClient";
 export const SignInPage = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
-      email: "",
+      email: "18807378000@139.com",
       code: "",
     });
     const errors = reactive({

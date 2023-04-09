@@ -3,7 +3,7 @@ import { computed, defineComponent, PropType, ref } from "vue";
 import { Button } from "./buttons/Button";
 import { EmojiSelect } from "./EmojiSelect";
 import style from "./Form.module.scss";
-import { getFriendlyError } from "./getFrendlyError";
+import { getFriendlyError } from "./getFriendlyError";
 import { Time } from "./time";
 
 export const Form = defineComponent({

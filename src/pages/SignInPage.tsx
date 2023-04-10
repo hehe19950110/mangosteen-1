@@ -5,9 +5,9 @@ import { Form, FormItem } from "../shared/Form";
 import { Icon } from "../shared/Icon";
 import { hasError, validate } from "../shared/validate";
 import style from "./SignInPage.module.scss";
-import axios, { AxiosResponse } from "axios";
 import { http } from "../shared/HttpClient";
 import { useBoolean } from "../hooks/useBoolean";
+import { history } from "../shared/history";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -56,8 +56,8 @@ export const SignInPage = defineComponent({
       // 只有在没有错误的情况下 才能发请求：
       if (!hasError(errors)) {
         const response = await http.post<{ jwt: string }>("/session", formData);
-        // localStorage.setItem("jwt", response.data.jwt);
-        // history.push("/");
+        localStorage.setItem("jwt", response.data.jwt);
+        history.push("/");
       }
     };
 
@@ -91,7 +91,7 @@ export const SignInPage = defineComponent({
                 <h1 class={style.appName}>山竹记账</h1>
               </div>
 
-              <div>{JSON.stringify(formData)}</div>
+              {/* <div>{JSON.stringify(formData)}</div> */}
 
               <Form onSubmit={onSubmit}>
                 <FormItem

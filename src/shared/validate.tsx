@@ -47,13 +47,16 @@ function isEmpty(value: null | undefined | string | number | FData) {
 }
 
 export function hasError(errors: Record<string, string[]>) {
-  // errors 的类型是Record， key 是 string ，value 是 string[]
-  // return Object.values(errors)
-  // .reduce((result, value) => result + value.length, 0) > 0
+  /* 
+     errors 的类型是Record， key 是 string ，value 是 string[]
+     也 可以写成：
+     return Object.values(errors)
+     .reduce((result, value) => result + value.length, 0) > 0
+     但是 reduce 没有中断机制，一定会遍历每一项
+  */
   let result = false;
   for (let key in errors) {
     if (errors[key].length > 0) {
-      // 只要每一个 key 对应的 value 的长度 大于0
       result = true;
       break;
     }

@@ -21,10 +21,10 @@ export default defineConfig({
       "/api/v1": {
         // 再出错 先用 postman 调用API地址
         target: "http://121.196.236.94:3000/",
+        // ip + port
       },
     },
     port: 8888,
-    // ip + port
 
     // 本机默认的 ip :
     // 127.0.0.1

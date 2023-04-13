@@ -8,6 +8,7 @@ import style from "./SignInPage.module.scss";
 import { http } from "../shared/HttpClient";
 import { useBoolean } from "../hooks/useBoolean";
 import { history } from "../shared/history";
+import { useRoute, useRouter } from "vue-router";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -26,6 +27,11 @@ export const SignInPage = defineComponent({
       on: disabled,
       off: enable,
     } = useBoolean(false);
+
+    // router 是路由器，有一个方法是 .push 可以改变路由
+    // route 是路由信息 里面只包含信息
+    const router = useRouter();
+    const route = useRoute();
 
     //效验规则：
     const onSubmit = async (e: Event) => {
@@ -55,9 +61,15 @@ export const SignInPage = defineComponent({
       // 所以 需要遍历数组 从未判断 每一个key对应的value为空
       // 只有在没有错误的情况下 才能发请求：
       if (!hasError(errors)) {
-        const response = await http.post<{ jwt: string }>("/session", formData);
+        const response = await http
+          .post<{ jwt: string }>("/session", formData)
+          .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
         localStorage.setItem("jwt", response.data.jwt);
-        history.push("/");
+        //  history.push("/");  错误 只切换地址栏、不切换页面 改为：router.push("/");
+        const returnTo = route.query.return_to?.toString(); // 也可以写成 router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
+        //refreshMe()
+        router.push(returnTo ? returnTo : "/");
+        // 也可以写成：  router.push(returnTo || "/");
       }
     };
 
@@ -67,7 +79,14 @@ export const SignInPage = defineComponent({
       }
       throw error;
     };
-
+    /* 因为 后端报错的 eroor 与前端的 error 一样，所以 .catch（onSubmitError）也可以写成 .catch（onError）
+      const onSubmitError = (error: any) => {
+        if (error.response.status === 422) {
+          Object.assign(errors, error.response.data.errors);
+        }
+        throw error;
+      };
+    */
     const refValidationCode = ref<any>();
     const onClickSendValidationCode = async () => {
       disabled(); // 把 布尔值 变成 TRUE; on: disabled,  on: () => (bool.value = true),

@@ -20,9 +20,14 @@ import { StatisticsPage } from "../pages/StatisticsPage";
 
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
+
   {
     path: "/welcome",
     component: WelcomePage,
+    // 定义路由的时候 直接检查
+    beforeEnter: (to, from, next) => {
+      localStorage.getItem("skip") === "yes" ? next("/start") : next();
+    },
     children: [
       { path: "", redirect: "/welcome/1" }, //默认到/welcome/1
       {
@@ -47,7 +52,9 @@ export const routes: RouteRecordRaw[] = [
       },
     ],
   },
+
   { path: "/start", component: StartPage },
+
   {
     path: "/items",
     component: ItemPage,
@@ -64,10 +71,12 @@ export const routes: RouteRecordRaw[] = [
       { path: ":id/edit", component: TagEdit },
     ],
   },
+
   {
     path: "/sign_in",
     component: SignInPage,
   },
+
   {
     path: "/statistics",
     component: StatisticsPage,

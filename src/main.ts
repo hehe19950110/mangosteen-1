@@ -4,10 +4,57 @@ import { createRouter } from "vue-router";
 import { history } from "./shared/history";
 import { routes } from "./config/routes";
 import "@svgstore";
+import { fetchMe, mePromise } from "./shared/me";
 
 const router = createRouter({
   history,
   routes,
+});
+
+fetchMe();
+
+// 设置登录验证的路由白名单：
+const whiteList: Record<string, "exact" | "startsWith"> = {
+  "/": "exact",
+  "/start": "exact",
+  "/welcome": "startsWith",
+  "/sign_in": "startsWith",
+};
+/*
+// 设置 一进去页面就先请求
+// 后面 都会使用第一次发请求的结果
+const promise = http.get('/me')
+
+router.beforeEach(async(to, from) => {
+  if(to.path === '/' || to.path.startsWith('/welcome') 
+                    || to.path.startsWith('/sign_in') 
+                    || to.path === '/start'){
+    return true
+  } else {
+    const path = await mePromise.then( 
+      // 成功，就可以获取用户信息，进入想去的路由
+      // 失败，就 return 到登录的路由
+      () => true,
+      () =>  'sign_in?return_to' + to.path
+    )
+    return path
+  }
+})
+*/
+router.beforeEach((to, from) => {
+  for (const key in whiteList) {
+    const value = whiteList[key];
+    if (value === "exact" && to.path === key) {
+      return true;
+    }
+    if (value === "startsWith" && to.path.startsWith(key)) {
+      return true;
+    }
+  }
+  return mePromise!.then(
+    () => true,
+    () => "/sign_in?return_to=" + to.path
+  );
 });
 
 const app = createApp(App);

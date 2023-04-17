@@ -9,6 +9,7 @@ import { http } from "../shared/HttpClient";
 import { useBoolean } from "../hooks/useBoolean";
 import { history } from "../shared/history";
 import { useRoute, useRouter } from "vue-router";
+import { refreshMe } from "../shared/me";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -21,6 +22,7 @@ export const SignInPage = defineComponent({
       code: [],
     });
 
+    const refValidationCode = ref<any>();
     const {
       ref: refDisabled,
       toggle,
@@ -62,14 +64,18 @@ export const SignInPage = defineComponent({
       // 只有在没有错误的情况下 才能发请求：
       if (!hasError(errors)) {
         const response = await http
-          .post<{ jwt: string }>("/session", formData)
+          .post<{ jwt: string }>("/session", formData, {
+            params: { _mock: "session" },
+          })
           .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
+        console.log(response);
         localStorage.setItem("jwt", response.data.jwt);
         //  history.push("/");  错误 只切换地址栏、不切换页面 改为：router.push("/");
         const returnTo = route.query.return_to?.toString(); // 也可以写成 router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
-        //refreshMe()
-        router.push(returnTo ? returnTo : "/");
-        // 也可以写成：  router.push(returnTo || "/");
+
+        // 在用户登录成功之后，在页面跳转之前，主动更新，及把promise 重新附一个值
+        refreshMe();
+        router.push(returnTo ? returnTo : "/"); // 也可以写成：  router.push(returnTo || "/");
       }
     };
 
@@ -87,7 +93,7 @@ export const SignInPage = defineComponent({
         throw error;
       };
     */
-    const refValidationCode = ref<any>();
+
     const onClickSendValidationCode = async () => {
       disabled(); // 把 布尔值 变成 TRUE; on: disabled,  on: () => (bool.value = true),
       const response = await http
@@ -107,7 +113,7 @@ export const SignInPage = defineComponent({
             <>
               <div class={style.logo}>
                 <Icon class={style.icon} name="mangosteen" />
-                <h1 class={style.appName}>山竹记账</h1>
+                <h1 class={style.appName}>月月记账</h1>
               </div>
 
               {/* <div>{JSON.stringify(formData)}</div> */}

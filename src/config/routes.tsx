@@ -18,6 +18,10 @@ import { TagPage } from "../pages/TagPage";
 import { SignInPage } from "../pages/SignInPage";
 import { StatisticsPage } from "../pages/StatisticsPage";
 
+// 因需要检查登录状态的页面更多，
+// 可反向设置路由，
+// 设置仅在 根路径"/"、"/welcome"、"/sign_in"时，不需要检查登录，
+// 其他页面 均需要检查登录状态
 export const routes: RouteRecordRaw[] = [
   { path: "/", redirect: "/welcome" },
 

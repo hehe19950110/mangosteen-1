@@ -13,7 +13,7 @@ export const StartPage = defineComponent({
     return () => (
       <LayoutNavBar>
         {{
-          title: () => "山竹记账",
+          title: () => "月月记账",
           icon: () => <OverlayIcon />,
           default: () => (
             <>

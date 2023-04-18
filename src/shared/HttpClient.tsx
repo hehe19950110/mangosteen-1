@@ -92,6 +92,7 @@ const mock = (response: AxiosResponse) => {
     case "tagIndex":
       [response.status, response.data] = mockTagIndex(response.config);
       return true;
+
     case "session":
       [response.status, response.data] = mockSession(response.config);
       return true;

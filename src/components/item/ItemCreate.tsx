@@ -1,9 +1,10 @@
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 import { Icon } from "../../shared/Icon";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
 import style from "./ItemCreate.module.scss";
+import { http } from "../../shared/HttpClient";
 
 export const ItemCreate = defineComponent({
   props: {
@@ -13,49 +14,51 @@ export const ItemCreate = defineComponent({
   },
   setup: (props, context) => {
     const refKind = ref("支出");
-    const refExpensesTags = ref([
-      // 类型 尽量不要用type，是很多编程语言内置的一个API，而是使用 category、kind 等来表示类型
-      { id: 1, name: "餐饮", sign: "￥", category: "expenses" },
-      { id: 2, name: "购物", sign: "￥", category: "expenses" },
-      { id: 3, name: "日用", sign: "￥", category: "expenses" },
-      { id: 4, name: "交通", sign: "￥", category: "expenses" },
-      { id: 5, name: "水果", sign: "￥", category: "expenses" },
-      { id: 6, name: "蔬菜", sign: "￥", category: "expenses" },
-      { id: 7, name: "零食", sign: "￥", category: "expenses" },
-      { id: 8, name: "运动", sign: "￥", category: "expenses" },
-      { id: 9, name: "娱乐", sign: "￥", category: "expenses" },
-      { id: 10, name: "通讯", sign: "￥", category: "expenses" },
-      { id: 11, name: "服饰", sign: "￥", category: "expenses" },
-      { id: 12, name: "美容", sign: "￥", category: "expenses" },
-      { id: 13, name: "租房", sign: "￥", category: "expenses" },
-      { id: 14, name: "家居", sign: "￥", category: "expenses" },
-      { id: 15, name: "孩子", sign: "￥", category: "expenses" },
-      { id: 16, name: "长辈", sign: "￥", category: "expenses" },
-      { id: 17, name: "社交", sign: "￥", category: "expenses" },
-      { id: 18, name: "旅行", sign: "￥", category: "expenses" },
-      { id: 19, name: "烟酒", sign: "￥", category: "expenses" },
-      { id: 20, name: "数码", sign: "￥", category: "expenses" },
-      { id: 21, name: "汽车", sign: "￥", category: "expenses" },
-      { id: 22, name: "医疗", sign: "￥", category: "expenses" },
-      { id: 23, name: "书籍", sign: "￥", category: "expenses" },
-      { id: 24, name: "学习", sign: "￥", category: "expenses" },
-      { id: 25, name: "宠物", sign: "￥", category: "expenses" },
-      { id: 26, name: "礼金", sign: "￥", category: "expenses" },
-      { id: 27, name: "礼物", sign: "￥", category: "expenses" },
-      { id: 28, name: "办公", sign: "￥", category: "expenses" },
-      { id: 29, name: "维修", sign: "￥", category: "expenses" },
-      { id: 30, name: "捐赠", sign: "￥", category: "expenses" },
-      { id: 31, name: "彩票", sign: "￥", category: "expenses" },
-      { id: 32, name: "快递", sign: "￥", category: "expenses" },
-      { id: 33, name: "设置", sign: "￥", category: "expenses" },
+    onMounted(async () => {
+      // response 除了接受普通的字符串函数 "/tags", 还接受类型参数<{ resources: Tag[] }>
+      const response = await http.get<{ resources: Tag[] }>("/tags", {
+        kind: "expenses",
+        _mock: "tagIndex",
+      });
+      refExpensesTags.value = response.data.resources;
+    });
+    const refExpensesTags = ref<Tag[]>([
+      /* 类型 尽量不要用type，是很多编程语言内置的一个API，而是使用 kind、kind 等来表示类型
+      { id: 1, name: "餐饮", sign: "￥", kind: "expenses" },
+      { id: 2, name: "购物", sign: "￥", kind: "expenses" },
+      { id: 3, name: "日用", sign: "￥", kind: "expenses" },
+      { id: 4, name: "交通", sign: "￥", kind: "expenses" },
+      { id: 5, name: "水果", sign: "￥", kind: "expenses" },
+      { id: 6, name: "蔬菜", sign: "￥", kind: "expenses" },
+      { id: 7, name: "零食", sign: "￥", kind: "expenses" },
+      { id: 8, name: "运动", sign: "￥", kind: "expenses" },
+      { id: 9, name: "娱乐", sign: "￥", kind: "expenses" },
+      { id: 10, name: "通讯", sign: "￥", kind: "expenses" },
+      { id: 11, name: "服饰", sign: "￥", kind: "expenses" },
+      { id: 12, name: "家居", sign: "￥", kind: "expenses" },
+      { id: 13, name: "孩子", sign: "￥", kind: "expenses" },
+      { id: 14, name: "长辈", sign: "￥", kind: "expenses" },
+      { id: 15, name: "社交", sign: "￥", kind: "expenses" },
+      { id: 16, name: "旅行", sign: "￥", kind: "expenses" },
+*/
     ]);
-    const refIncomeTags = ref([
-      { id: 1, name: "工资", sign: "￥", category: "income" },
-      { id: 2, name: "兼职", sign: "￥", category: "income" },
-      { id: 3, name: "彩票", sign: "￥", category: "income" },
-      { id: 4, name: "基金", sign: "￥", category: "income" },
-      { id: 5, name: "礼金", sign: "￥", category: "income" },
-      { id: 6, name: "其他", sign: "￥", category: "income" },
+
+    onMounted(async () => {
+      const response = await http.get<{ resources: Tag[] }>("/tags", {
+        kind: "income",
+        _mock: "tagIndex",
+      });
+      refIncomeTags.value = response.data.resources;
+    });
+    const refIncomeTags = ref<Tag[]>([
+      /*
+      { id: 1, name: "工资", sign: "￥", kind: "income" },
+      { id: 2, name: "兼职", sign: "￥", kind: "income" },
+      { id: 3, name: "彩票", sign: "￥", kind: "income" },
+      { id: 4, name: "基金", sign: "￥", kind: "income" },
+      { id: 5, name: "礼金", sign: "￥", kind: "income" },
+      { id: 6, name: "其他", sign: "￥", kind: "income" },
+      */
     ]);
 
     return () => (

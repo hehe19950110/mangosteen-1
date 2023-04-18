@@ -10,10 +10,6 @@ export const Tabs = defineComponent({
       type: String as PropType<string>,
       required: false,
     },
-    // onUpdateSelected: {
-    //   type: Function as PropType<(name: string) => void>,
-    //   required: false,
-    // },
   },
   emits: ["update:selected"],
 
@@ -48,7 +44,11 @@ export const Tabs = defineComponent({
             ))}
           </ol>
 
-          <div>{tabs.find((item) => item.props?.name === props.selected)}</div>
+          <div>
+            {tabs.map((item) => (
+              <div v-show={item.props?.name === props.selected}>{item}</div>
+            ))}
+          </div>
         </div>
       );
     };

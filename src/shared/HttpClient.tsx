@@ -4,7 +4,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { mockSession, mockTagIndex } from "../mock/mock";
+import { mockItemCreate, mockSession, mockTagIndex } from "../mock/mock";
 
 // 把四个 config 类型提前； 使用 omit 删除 AxiosRequestConfig 中的 params,url,method 等字段
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
@@ -95,6 +95,10 @@ const mock = (response: AxiosResponse) => {
 
     case "session":
       [response.status, response.data] = mockSession(response.config);
+      return true;
+
+    case "itemCreate":
+      [response.status, response.data] = mockItemCreate(response.config);
       return true;
   }
   return false;

@@ -15,5 +15,6 @@ export const useTags = (fetcher: Fetcher) => {
     page.value += 1;
   };
   onMounted(fetchTags);
+
   return { page, hasMore, tags, fetchTags };
 };

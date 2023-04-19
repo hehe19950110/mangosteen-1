@@ -1,8 +1,15 @@
 export class Time {
   date: Date;
-  constructor(date = new Date()) {
-    this.date = date;
+  constructor(date?: string | Date) {
+    if (date === undefined) {
+      this.date = new Date();
+    } else if (typeof date === "string") {
+      this.date = new Date(date); // new Date 可以接受字符串
+    } else {
+      this.date = date;
+    }
   }
+
   format(pattern = "YYYY-MM-DD") {
     const year = this.date.getFullYear();
     const month = this.date.getMonth() + 1;
@@ -50,22 +57,11 @@ export class Time {
       | "second"
       | "millisecond"
   ) {
-    // return new Time but not change this.date
+    // return new Time 但是不改变 this.date
     let date = new Date(this.date.getTime());
     switch (unit) {
       case "year":
-        const currentDate = date.getDate();
-        date.setDate(1);
         date.setFullYear(date.getFullYear() + amount);
-        const targetDate = new Date(
-          date.getFullYear(),
-          date.getMonth() + 1,
-          0,
-          0,
-          0,
-          0
-        ).getDate();
-        date.setDate(Math.min(currentDate, targetDate));
         break;
 
       case "month": // 需要考虑闰年闰月的情况

@@ -6,14 +6,16 @@ import style from "./InputPad.module.scss";
 
 export const InputPad = defineComponent({
   props: {
-    name: {
-      type: String as PropType<string>,
+    happenAt: String,
+    amount: Number,
+    onSubmit: {
+      type: Function as PropType<(happenAt: string, amount: number) => void>,
     },
   },
 
   setup: (props, context) => {
-    const now = new Date();
-    const refDate = ref<Date>(now);
+    // const now = new Date();
+    // const refDate = ref<Date>(now);
     const appendText = (n: number | string) => {
       const nString = n.toString();
       const dotIndex = refAmount.value.indexOf("."); //小数点的位置
@@ -25,12 +27,12 @@ export const InputPad = defineComponent({
       }
 
       if (nString === ".") {
-        // 有小数点的情况
+        // 有小数点的情况：
         if (dotIndex >= 0) {
           return;
         }
       } else if (nString === "0") {
-        // 没有小数点的情况
+        // 没有小数点的情况：
         if (dotIndex === -1) {
           // 没小数点，但有0：
           if (refAmount.value === "0") {
@@ -117,17 +119,26 @@ export const InputPad = defineComponent({
           refAmount.value = "0";
         },
       },
-      { text: "提交", onClick: () => {} },
+      // 将 "99.1" ==> 9910 ： parseFloat(refAmount.value) * 100)
+      {
+        text: "提交",
+        onClick: () => {
+          context.emit("update:amount", parseFloat(refAmount.value) * 100);
+          props.onSubmit?.();
+        },
+      },
     ];
 
     const refDatePickerVisible = ref(false);
     const showDatePicker = () => (refDatePickerVisible.value = true);
     const hideDatePicker = () => (refDatePickerVisible.value = false);
     const setDate = (date: Date) => {
-      refDate.value = date;
+      context.emit("update:happenAt", date.toISOString()); //date.toISOString() 将日期对象转换为 ISO 格式的字符串
       hideDatePicker();
     };
-    const refAmount = ref("0");
+
+    // 将 9900 ==> "99" ： (props.amount / 100).toString()
+    const refAmount = ref(props.amount ? (props.amount / 100).toString() : "0");
 
     return () => (
       <>
@@ -136,14 +147,14 @@ export const InputPad = defineComponent({
             <Icon name="date" class={style.icon} />
             <span>
               <span onClick={showDatePicker}>
-                {new Time(refDate.value).format()}
+                {new Time(props.happenAt).format()}
               </span>
               <Popup
                 position="bottom"
                 v-model:show={refDatePickerVisible.value}
               >
                 <DatetimePicker
-                  value={refDate.value}
+                  value={props.happenAt}
                   type="date"
                   title="选择年月日"
                   onConfirm={setDate}

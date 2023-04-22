@@ -2,14 +2,14 @@ import { defineComponent, PropType, reactive, ref } from "vue";
 import { LayoutNavBar } from "../layouts/LayoutNavBar";
 import { Button } from "../shared/buttons/Button";
 import { Form, FormItem } from "../shared/Form";
-import { Icon } from "../shared/Icon";
+import { Icon } from "../shared/Icon/Icon";
 import { hasError, validate } from "../shared/validate";
 import style from "./SignInPage.module.scss";
 import { http } from "../shared/HttpClient";
 import { useBoolean } from "../hooks/useBoolean";
-import { history } from "../shared/history";
 import { useRoute, useRouter } from "vue-router";
 import { refreshMe } from "../shared/me";
+import { BackIcon } from "../shared/Icon/BackIcon";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
@@ -110,7 +110,7 @@ export const SignInPage = defineComponent({
       <LayoutNavBar>
         {{
           title: () => "登录",
-          icon: () => <Icon name="left" />,
+          icon: () => <BackIcon />,
           default: () => (
             <>
               <div class={style.logo}>

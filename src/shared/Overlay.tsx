@@ -1,6 +1,6 @@
 import { defineComponent, PropType, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { Icon } from "./Icon";
+import { Icon } from "./Icon/Icon";
 import style from "./Overlay.module.scss";
 
 export const Overlay = defineComponent({

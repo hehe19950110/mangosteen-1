@@ -1,7 +1,8 @@
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
+import { RouterLink, useRouter } from "vue-router";
 import { Button } from "../../shared/buttons/Button";
 import { http } from "../../shared/HttpClient";
-import { Icon } from "../../shared/Icon";
+import { Icon } from "../../shared/Icon/Icon";
 import { useTags } from "../../shared/useTags";
 import style from "./Tags.module.scss";
 
@@ -27,15 +28,51 @@ export const Tags = defineComponent({
       context.emit("update:selected", tag.id);
     };
 
+    // const timer = number | undefined = undefined;
+    // const currentTag = HTMLDivElement | undefined = undefined;
+    const timer = ref<number>();
+    const currentTag = ref<HTMLDivElement>();
+    const router = useRouter();
+    const onLongPress = (tagId: Tag["id"]) => {
+      // 从 onTouchStart 里拿到 tagId
+      router.push(
+        `/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`
+      );
+      console.log("长按");
+    };
+    const onTouchStart = (e: TouchEvent, tag: Tag) => {
+      currentTag.value = e.currentTarget as HTMLDivElement;
+      timer.value = setTimeout(() => {
+        onLongPress(tag.id);
+      }, 1000);
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      clearTimeout(timer.value);
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      const pointedElement = document.elementFromPoint(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+      // if (currentTag.value?.contains(pointedElement) || currentTag.value === pointedElement) else {clearTimeout(timer.value)} 等同于：
+      if (
+        currentTag.value !== pointedElement &&
+        currentTag.value?.contains(pointedElement) === false
+      ) {
+        clearTimeout(timer.value);
+      }
+    };
+
     return () => (
       <>
-        <div class={style.tags_wrapper}>
-          <div class={style.tag}>
+        <div class={style.tags_wrapper} onTouchmove={onTouchMove}>
+          <RouterLink to={`/tags/create?kind=${props.kind}`} class={style.tag}>
             <div class={style.sign}>
               <Icon name="add" class={style.createTag} />
             </div>
             <div class={style.name}>新增</div>
-          </div>
+          </RouterLink>
+
           {tags.value.map((tag) => (
             <div
               class={[
@@ -43,6 +80,8 @@ export const Tags = defineComponent({
                 props.selected === tag.id ? style.selected : "",
               ]}
               onClick={() => onSelect(tag)}
+              onTouchstart={(e) => onTouchStart(e, tag)}
+              onTouchend={onTouchEnd}
             >
               <div class={style.sign}>{tag.sign}</div>
               <div class={style.name}>{tag.name}</div>

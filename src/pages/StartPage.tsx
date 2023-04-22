@@ -4,7 +4,7 @@ import { LayoutNavBar } from "../layouts/LayoutNavBar";
 import { Button } from "../shared/buttons/Button";
 import { FloatButton } from "../shared/buttons/FloatButton";
 import { Center } from "../shared/Center";
-import { Icon } from "../shared/Icon";
+import { Icon } from "../shared/Icon/Icon";
 import { Overlay, OverlayIcon } from "../shared/Overlay";
 import style from "./StartPage.module.scss";
 

@@ -40,7 +40,7 @@ export const WelcomePage = defineComponent({
           <svg>
             <use xlinkHref="#mangosteen"></use>
           </svg>
-          <h1>山竹app</h1>
+          <h1>月月记账app</h1>
         </header>
 
         <main class={style.main} ref={main}>

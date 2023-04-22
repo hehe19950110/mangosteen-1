@@ -6,7 +6,7 @@
   --welcome-nav-height: 64px;
   --welcome-nav-gap: 8px;
 
-  --z-index-bottom-nav: 9; 
+  --z-index-bottom-nav: 9;
   --z-index-overlay: 19;
   --z-index-navbar: 32;
   --van-overlay-z-index: 64;
@@ -16,12 +16,12 @@
   --button-bg: #6a48c5;
   --button-bg-danger: #f02727;
   --button-border-color: #ddd;
-  --button-text:var(--welcome-text);
+  --button-text: var(--welcome-text);
   --button-font-size: 18px;
   --button-radius: 8px;
   --button-height: 48px;
   --floatbutton-bg: #6a48c5;
-  --floatbutton-text:white;;
+  --floatbutton-text: white;
 
   --navbar-bg-start: #5e3bbb;
   --navbar-bg-end: #9867cf;
@@ -46,14 +46,14 @@
   --input-border-color: #6a48c5;
   --input-min-height: 36px;
   --input-radius: var(--button-radius);
-  --input-shadow: rgba(0,0,0,0.25);
+  --input-shadow: rgba(0, 0, 0, 0.25);
 
   --emoji-nav-text-selected: #333;
   --emoji-nav-text: #999;
-  --error-color: #E10505;
+  --error-color: #e10505;
 
   --bg: white;
-  --tag-bg: #EFEFEF;
+  --tag-bg: #efefef;
 
   --list-tag-text: #333;
   --list-amount-text: var(--amount-text);
@@ -66,9 +66,8 @@
 
   --dialog-header-text: white;
 
-  --text:#333;
+  --text: #333;
   --app-name-text: #5e3bbb;
   --text-muted: #818181;
-  --bar-bg: #CCCCCC;
-
+  --bar-bg: #cccccc;
 }

@@ -1,51 +1,53 @@
+import { Dialog } from "vant";
 import { defineComponent, reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
 import { Button } from "../../shared/buttons/Button";
-import { Icon } from "../../shared/Icon";
-import { Rules, validate } from "../../shared/validate";
+import { http } from "../../shared/HttpClient";
+import { BackIcon } from "../../shared/Icon/BackIcon";
 import style from "./Tag.module.scss";
 import { TagForm } from "./TagForm";
 
 export const TagEdit = defineComponent({
   setup: (props, context) => {
-    const formData = reactive({
-      name: "",
-      sign: "",
-    });
-    const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({});
-    const onSubmit = (e: Event) => {
-      const rules: Rules<typeof formData> = [
-        { key: "name", type: "required", message: "必填" },
-        {
-          key: "name",
-          type: "pattern",
-          regex: /^.{1,4}$/,
-          message: "只能填 1 ~ 4 个字符",
-        },
-        { key: "sign", type: "required", message: "必填" },
-      ];
-      Object.assign(errors, {
-        name: undefined,
-        sign: undefined,
+    const route = useRoute();
+    const router = useRouter();
+    const numberId = parseInt(route.params.id!.toString());
+    // 如果 失败了 那就是 NaN，输出错误； 即可保证： <TagForm id={numberId} />里的 numberId 是数字
+    if (Number.isNaN(numberId)) {
+      return () => <div>id 不存在</div>;
+    }
+
+    const onError = () => {
+      Dialog.alert({ title: "提示", message: "删除失败" });
+    };
+    const onDeleteTag = async (options?: { withItems?: boolean }) => {
+      await Dialog.confirm({
+        title: "确认",
+        message: "你真的要删除标签吗？",
       });
-      Object.assign(errors, validate(formData, rules));
-      e.preventDefault();
+      await http
+        .delete(`/tags/${numberId}`, {
+          withItems: options?.withItems ? "true" : "false",
+        })
+        .catch(onError);
+      router.back();
     };
 
     return () => (
       <LayoutNavBar>
         {{
           title: () => "新建标签",
-          icon: () => <Icon name="left" onClick={() => {}} />,
+          icon: () => <BackIcon />,
           default: () => (
             <>
-              <TagForm />
+              <TagForm id={numberId} />
 
               <div class={style.actions}>
                 <Button
                   level="danger"
                   class={style.removeTags}
-                  onClick={() => {}}
+                  onClick={() => onDeleteTag()}
                 >
                   删除标签
                 </Button>
@@ -53,7 +55,7 @@ export const TagEdit = defineComponent({
                 <Button
                   level="danger"
                   class={style.removeTagsAndItems}
-                  onClick={() => {}}
+                  onClick={() => onDeleteTag({ withItems: true })}
                 >
                   删除标签和记账
                 </Button>

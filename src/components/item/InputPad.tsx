@@ -1,6 +1,6 @@
 import { DatetimePicker, Popup } from "vant";
 import { defineComponent, PropType, ref } from "vue";
-import { Icon } from "../../shared/Icon";
+import { Icon } from "../../shared/Icon/Icon";
 import { Time } from "../../shared/time";
 import style from "./InputPad.module.scss";
 

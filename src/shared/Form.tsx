@@ -48,28 +48,27 @@ export const FormItem = defineComponent({
   },
   emits: ["update:modelValue"],
   /*     v-model 中 "update:modelValue"
-vue中子传父参数的方法共有两种：
-1、子组件通过emit传输
-2、通过自定义组件传输
+    vue中子传父参数的方法共有两种：
+      1、子组件通过emit传输
+      2、通过自定义组件传输
 
-vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也不再是input，而是update:modelValue
-指的是 “发射” 一个修改 props 的通知，告诉父组件自己去修改 props
-  export default {
-    props: ['modelValue'],
-    emits: ['update:modelValue'],
-    setup(props, { emit }) {
-      return () =>
-        h(SomeComponent, {
-          modelValue: props.modelValue,
-          'onUpdate:modelValue': (value) => emit('update:modelValue', value)
-        })
-    }
-  }
+      vue3中，v-model绑定的不再是value，而是modelValue，接收的方法也不再是input，而是update:modelValue
+      指的是 “发射” 一个修改 props 的通知，告诉父组件自己去修改 props
+        export default {
+          props: ['modelValue'],
+          emits: ['update:modelValue'],
+          setup(props, { emit }) {
+            return () =>
+              h(SomeComponent, {
+                modelValue: props.modelValue,
+                'onUpdate:modelValue': (value) => emit('update:modelValue', value)
+              })
+          }
+        }
 */
 
   setup: (props, context) => {
     const refDateVisible = ref(false);
-
     /*倒计时：
     状态1：点击发送                      timer 不为空 就是状态2 
     状态2：

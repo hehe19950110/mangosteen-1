@@ -7,28 +7,28 @@ faker.setLocale("zh_CN");
 
 export const mockItemCreate: Mock = (config) => {
   return [
-    422,
+    200,
     {
-      // 错误提示 是后端给的
-      errors: {
-        tags_id: ["必须选择标签"],
-        amount: ["金额不能为零"],
+      resource: {
+        id: 2264,
+        user_id: 1312,
+        amount: 9900,
+        note: null,
+        tags_id: [3508],
+        happen_at: "2022-01-01T12:00:00.000Z",
+        created_at: "2023-01-01T22:22:22.301Z",
+        updated_at: "2023-01-01T22:22:22.301Z",
+        kind: "expenses",
       },
     },
   ];
   // return [
-  //   200,
+  //   422,
   //   {
-  //     resource: {
-  //       id: 2264,
-  //       user_id: 1312,
-  //       amount: 9900,
-  //       note: null,
-  //       tags_id: [3508],
-  //       happen_at: "2022-01-01T12:00:00.000Z",
-  //       created_at: "2023-01-01T22:22:22.301Z",
-  //       updated_at: "2023-01-01T22:22:22.301Z",
-  //       kind: "expenses",
+  //     // 错误提示 是后端给的
+  //     errors: {
+  //       tags_id: ["必须选择标签"],
+  //       amount: ["金额不能为零"],
   //     },
   //   },
   // ];

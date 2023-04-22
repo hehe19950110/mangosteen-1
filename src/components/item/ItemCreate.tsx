@@ -1,15 +1,14 @@
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
-import { defineComponent, onMounted, PropType, reactive, ref } from "vue";
-import { Icon } from "../../shared/Icon";
+import { defineComponent, PropType, reactive } from "vue";
 import { Tab, Tabs } from "../../shared/Tabs";
 import { InputPad } from "./InputPad";
 import style from "./ItemCreate.module.scss";
 import { http } from "../../shared/HttpClient";
-import { useTags } from "../../shared/useTags";
 import { Tags } from "./Tags";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { AxiosError } from "axios";
 import { Dialog } from "vant";
+import { BackIcon } from "../../shared/Icon/BackIcon";
 
 export const ItemCreate = defineComponent({
   props: {
@@ -65,6 +64,7 @@ export const ItemCreate = defineComponent({
       // new Date() 可以接受字符串，date.toISOString() 是一个 JavaScript Date对象的方法，用于将日期对象转换为 ISO 格式的字符串表示。
     });
 
+    const route = useRoute();
     const router = useRouter();
 
     const onError = (error: AxiosError<ResourceError>) => {
@@ -91,7 +91,7 @@ export const ItemCreate = defineComponent({
       <LayoutNavBar class={style.layout}>
         {{
           title: () => "记一笔",
-          icon: () => <Icon name="left" class={style.navIcon} />,
+          icon: () => <BackIcon />,
           default: () => (
             <>
               <div class={style.wrapper}>

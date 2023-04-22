@@ -30,7 +30,7 @@ export const routes: RouteRecordRaw[] = [
     component: WelcomePage,
     // 定义路由的时候 直接检查
     beforeEnter: (to, from, next) => {
-      localStorage.getItem("skip") === "yes" ? next("/start") : next();
+      localStorage.getItem("skipAD") === "yes" ? next("/start") : next();
     },
     children: [
       { path: "", redirect: "/welcome/1" }, //默认到/welcome/1

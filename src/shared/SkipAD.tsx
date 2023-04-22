@@ -1,11 +1,10 @@
 import { defineComponent, PropType } from "vue";
 import { RouteLocationNamedRaw, RouterLink } from "vue-router";
-import style from "./Skip.module.scss";
 
-export const Skip = defineComponent({
+export const SkipAD = defineComponent({
   setup: (props, context) => {
     const onClick = () => {
-      localStorage.setItem("skip", "yes");
+      localStorage.setItem("skipAD", "yes");
     };
     return () => (
       <span onClick={onClick}>

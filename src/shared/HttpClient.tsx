@@ -4,7 +4,13 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { mockItemCreate, mockSession, mockTagIndex } from "../mock/mock";
+import {
+  mockItemCreate,
+  mockSession,
+  mockTagEdit,
+  mockTagIndex,
+  mockTagShow,
+} from "../mock/mock";
 
 // 把四个 config 类型提前； 使用 omit 删除 AxiosRequestConfig 中的 params,url,method 等字段
 type GetConfig = Omit<AxiosRequestConfig, "params" | "url" | "method">;
@@ -35,7 +41,6 @@ export class Http {
       method: "get",
     });
   }
-
   // create
   post<R = unknown>(
     url: string,
@@ -99,6 +104,14 @@ const mock = (response: AxiosResponse) => {
 
     case "itemCreate":
       [response.status, response.data] = mockItemCreate(response.config);
+      return true;
+
+    case "tagShow":
+      [response.status, response.data] = mockTagShow(response.config);
+      return true;
+
+    case "tagEdit":
+      [response.status, response.data] = mockTagEdit(response.config);
       return true;
   }
   return false;

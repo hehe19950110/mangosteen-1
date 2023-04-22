@@ -105,8 +105,7 @@ const mock = (response: AxiosResponse) => {
 };
 
 export const http = new Http("/api/v1");
-{
-  /* 
+/* 
     对 http 进行封装：
     interceptors request/response 拦截器； https://juejin.cn/post/6844903569745788941
 
@@ -125,7 +124,7 @@ export const http = new Http("/api/v1");
       }
     );
   */
-}
+
 // 拦截器 两个：一个是 request，一个是response
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
@@ -141,15 +140,28 @@ http.instance.interceptors.response.use(
   // 篡改 response
   (response) => {
     mock(response);
-    return response;
+    // 状态码大于400的时候 走报错逻辑
+    if (response.status >= 400) {
+      throw { response: response };
+    } else {
+      return response;
+    }
   },
   (error) => {
-    // 如果我能篡改失败，就可以把 error.response 篡改成成功的后 再返回出去
+    /*
+      如果我能篡改失败，就可以把 error.response 篡改成成功的后 再返回出去
     if (mock(error.response)) {
       return error.response;
     } else {
-      // 如果篡改不了 还是把 error 返回出去
+      如果篡改不了 还是把 error 返回出去
       throw error;
+    }
+    */
+    mock(error.response);
+    if (error.response.status >= 400) {
+      throw error;
+    } else {
+      return error.response;
     }
   }
 );

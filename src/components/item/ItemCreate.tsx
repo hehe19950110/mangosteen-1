@@ -62,15 +62,17 @@ export const ItemCreate = defineComponent({
       tags_id: [],
       amount: 0,
       happen_at: new Date().toISOString(),
+      // new Date() 可以接受字符串，date.toISOString() 是一个 JavaScript Date对象的方法，用于将日期对象转换为 ISO 格式的字符串表示。
     });
 
     const router = useRouter();
 
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
+        // 没有地方显示错误，因此 选择dialog弹窗的形式展示
         Dialog.alert({
-          title: "出错",
-          message: Object.values(error.response.data.errors).join("\n"),
+          title: "错误",
+          message: Object.values(error.response.data.errors).join(","),
         });
       }
       throw error;

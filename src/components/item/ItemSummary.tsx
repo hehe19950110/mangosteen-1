@@ -1,6 +1,8 @@
 import style from "./ItemSummary.module.scss";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, onMounted, PropType, ref } from "vue";
 import { FloatButton } from "../../shared/buttons/FloatButton";
+import { http } from "../../shared/HttpClient";
+import { Button } from "../../shared/buttons/Button";
 
 export const ItemSummary = defineComponent({
   props: {
@@ -15,6 +17,27 @@ export const ItemSummary = defineComponent({
   },
 
   setup: (props, context) => {
+    const items = ref<Item[]>([]);
+    const hasMore = ref(false);
+    const page = ref(0);
+    const fetchItems = async () => {
+      if (!props.startDate || !props.endDate) {
+        return;
+      }
+      const response = await http.get<Resources<Item>>("/items", {
+        happen_after: props.startDate,
+        happen_before: props.endDate,
+        page: page.value + 1,
+        _mock: "itemIndex",
+      });
+      const { resources, pager } = response.data;
+      items.value?.push(...resources);
+      hasMore.value =
+        (pager.page - 1) * pager.per_page + resources.length < pager.count;
+      page.value += 1;
+    };
+    onMounted(fetchItems);
+
     return () => (
       <div class={style.wrapper}>
         <ul class={style.total}>
@@ -125,7 +148,13 @@ export const ItemSummary = defineComponent({
           </li>
         </ol>
 
-        <div class={style.more}>向下滑动加载更多</div>
+        <div class={style.more}>
+          {hasMore.value ? (
+            <Button onClick={fetchItems}>向下滑动加载更多</Button>
+          ) : (
+            <span>没有更多</span>
+          )}
+        </div>
         <FloatButton iconName="add" />
       </div>
     );

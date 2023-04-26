@@ -20,4 +20,5 @@ const div = ref<HTMLDivElement | null>(null);
 
 ## 如何打包
 
-傻猴子
+注：
+删除 tag 的时候 没有提供删除记账的选项

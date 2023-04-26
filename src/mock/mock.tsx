@@ -55,8 +55,8 @@ export const mockItemIndex: Mock = (config) => {
     pager: createPaper(page),
     summary: {
       income: 9900,
-      expenses: 9900,
-      balance: 0,
+      expenses: 9000,
+      balance: 900,
     },
   });
   if (!page || page === 1) {
@@ -66,6 +66,17 @@ export const mockItemIndex: Mock = (config) => {
   } else {
     return [200, {}];
   }
+};
+
+export const mockItemIndexBalance: Mock = (config) => {
+  return [
+    200,
+    {
+      expenses: 9900,
+      income: 9900,
+      balance: 0,
+    },
+  ];
 };
 
 export const mockSession: Mock = (config) => {

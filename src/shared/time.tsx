@@ -46,6 +46,9 @@ export class Time {
   getRaw() {
     return this.date;
   }
+  getTimestamp() {
+    return this.date.getTime();
+  }
   add(
     amount: number,
     unit:

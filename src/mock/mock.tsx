@@ -128,37 +128,7 @@ export const mockTagIndex: Mock = (config) => {
     return [200, createBody(1)];
   }
 };
-/*
-  if (config.params.kind === "expenses") {
-    return [
-      200,
-      {
-        resources: [
-          { id: 1, name: "餐饮", sign: "￥", kind: "expenses" },
-          { id: 2, name: "购物", sign: "￥", kind: "expenses" },
-          { id: 3, name: "日用", sign: "￥", kind: "expenses" },
-          { id: 4, name: "交通", sign: "￥", kind: "expenses" },
-          { id: 5, name: "水果", sign: "￥", kind: "expenses" },
-          { id: 6, name: "蔬菜", sign: "￥", kind: "expenses" },
-          { id: 7, name: "零食", sign: "￥", kind: "expenses" },
-          { id: 8, name: "运动", sign: "￥", kind: "expenses" },
-          { id: 9, name: "娱乐", sign: "￥", kind: "expenses" },
-          { id: 10, name: "通讯", sign: "￥", kind: "expenses" },
-          { id: 11, name: "服饰", sign: "￥", kind: "expenses" },
-          { id: 12, name: "家居", sign: "￥", kind: "expenses" },
-          { id: 13, name: "孩子", sign: "￥", kind: "expenses" },
-          { id: 14, name: "长辈", sign: "￥", kind: "expenses" },
-          { id: 15, name: "社交", sign: "￥", kind: "expenses" },
-          { id: 16, name: "旅行", sign: "￥", kind: "expenses" },
-        ],
-      },
-    ];
-或者：
-    return [200, { resources: createTag(25) }];
-  } else {
-    return [200, { resources: createTag(25) }];
-  }
-*/
+
 export const mockTagEdit: Mock = (config) => {
   const createTag = (attrs?: any) => ({
     id: createId(),
@@ -179,4 +149,81 @@ export const mockTagShow: Mock = (config) => {
     ...attrs,
   });
   return [200, { resource: createTag() }];
+};
+
+export const mockItemSummary: Mock = (config) => {
+  const { group_by, kind } = config.params;
+  if (group_by === "happen_at" && kind === "expenses") {
+    return [
+      200,
+      {
+        groups: [
+          { happen_at: "2022-07-18T00:00:00.000+0800", amount: 100 },
+          { happen_at: "2022-07-22T00:00:00.000+0800", amount: 300 },
+          { happen_at: "2022-07-29T00:00:00.000+0800", amount: 200 },
+        ],
+        summary: 600,
+      },
+    ];
+  } else if (group_by === "happen_at" && kind === "income") {
+    return [
+      200,
+      {
+        groups: [
+          { happen_at: "2022-07-08T00:00:00.000+0800", amount: 100 },
+          { happen_at: "2022-07-12T00:00:00.000+0800", amount: 300 },
+          { happen_at: "2022-07-19T00:00:00.000+0800", amount: 200 },
+        ],
+        summary: 600,
+      },
+    ];
+  } else if (group_by === "tag_id" && kind === "expenses") {
+    return [
+      200,
+      {
+        groups: [
+          {
+            tag_id: 1,
+            tag: { id: 1, name: "交通", sign: faker.internet.emoji() },
+            amount: 100,
+          },
+          {
+            tag_id: 2,
+            tag: { id: 2, name: "吃饭", sign: faker.internet.emoji() },
+            amount: 300,
+          },
+          {
+            tag_id: 3,
+            tag: { id: 3, name: "购物", sign: faker.internet.emoji() },
+            amount: 200,
+          },
+        ],
+        summary: 600,
+      },
+    ];
+  } else {
+    return [
+      200,
+      {
+        groups: [
+          {
+            tag_id: 1,
+            tag: { id: 1, name: "交通", sign: faker.internet.emoji() },
+            amount: 400,
+          },
+          {
+            tag_id: 2,
+            tag: { id: 2, name: "吃饭", sign: faker.internet.emoji() },
+            amount: 300,
+          },
+          {
+            tag_id: 3,
+            tag: { id: 3, name: "购物", sign: faker.internet.emoji() },
+            amount: 200,
+          },
+        ],
+        summary: 900,
+      },
+    ];
+  }
 };

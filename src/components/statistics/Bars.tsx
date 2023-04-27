@@ -1,13 +1,15 @@
-import { computed, defineComponent, PropType, reactive } from "vue";
+import { defineComponent, PropType } from "vue";
+import { Money } from "../../shared/Money";
 import style from "./Bars.module.scss";
 
 export const Bars = defineComponent({
   props: {
-    name: {
-      type: String as PropType<string>,
+    data: {
+      type: Array as PropType<{ tag: Tag; amount: number; percent: number }[]>,
     },
   },
   setup: (props, context) => {
+    /*
     const data3 = reactive([
       // reactive 可响应的数据； 需要确定以下数据 后端能提供，不能则需要修改代码
       { tag: { id: 1, name: "房租", sign: "￥" }, amount: 2300 },
@@ -26,30 +28,38 @@ export const Bars = defineComponent({
         percent: Math.round((item.amount / total) * 100) + "%",
       }));
     });
-
+    */
     return () => (
       <div class={style.wrapper}>
-        {betterData3.value.map(({ tag, amount, percent }) => {
-          return (
-            <div class={style.topItem}>
-              <div class={style.sign}>{tag.sign}</div>
+        {props.data && props.data.length > 0 ? (
+          props.data.map(({ tag, amount, percent }) => {
+            return (
+              <div class={style.topItem}>
+                <div class={style.sign}>{tag.sign}</div>
 
-              <div class={style.bar_wrapper}>
-                <div class={style.bar_text}>
-                  <span>
-                    {" "}
-                    {tag.name} - {percent}{" "}
-                  </span>
-                  <span> ￥{amount} </span>
-                </div>
+                <div class={style.bar_wrapper}>
+                  <div class={style.bar_text}>
+                    <span>
+                      {tag.name} - {percent}%
+                    </span>
+                    <span>
+                      ￥<Money value={amount} />
+                    </span>
+                  </div>
 
-                <div class={style.bar}>
-                  <div class={style.bar_inner}></div>
+                  <div class={style.bar}>
+                    <div
+                      class={style.bar_inner}
+                      style={{ width: `${percent}%` }}
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div>没有数据</div>
+        )}
       </div>
     );
   },

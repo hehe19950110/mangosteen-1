@@ -1,6 +1,8 @@
-import { defineComponent, PropType, ref } from "vue";
-import { RouterLink } from "vue-router";
+import { Dialog } from "vant";
+import { defineComponent, onMounted, PropType, ref } from "vue";
+import { RouterLink, useRoute } from "vue-router";
 import { Icon } from "./Icon/Icon";
+import { mePromise } from "./me";
 import style from "./Overlay.module.scss";
 
 export const Overlay = defineComponent({
@@ -14,16 +16,37 @@ export const Overlay = defineComponent({
     const close = () => {
       props.onClose?.();
     };
-    const onClickSignIn = () => {};
+    const route = useRoute();
+    const me = ref<User>();
+    onMounted(async () => {
+      const response = await mePromise;
+      me.value = response?.data.resource;
+    });
+    const onSignOut = async () => {
+      await Dialog.confirm({
+        title: "确认",
+        message: "你真的要退出登录吗？",
+      });
+      localStorage.removeItem("jwt");
+    };
 
     return () => (
       <>
         <div class={style.mask} onClick={close}></div>
 
         <div class={style.overlay}>
-          <section class={style.currentUser} onClick={onClickSignIn}>
-            <h2>未登录</h2>
-            <p>点击这里登录</p>
+          <section class={style.currentUser}>
+            {me.value ? (
+              <div>
+                <h2 class={style.email}>{me.value.email}</h2>
+                <p onClick={onSignOut}>点击这里退出登录</p>
+              </div>
+            ) : (
+              <RouterLink to={`/sign_in?return_to=${route.fullPath}`}>
+                <h2>未登录</h2>
+                <p>点击这里登录</p>
+              </RouterLink>
+            )}
           </section>
 
           <nav>

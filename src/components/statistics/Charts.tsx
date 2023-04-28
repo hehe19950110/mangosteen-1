@@ -14,7 +14,9 @@ import style from "./Charts.module.scss";
 import { LineChart } from "./LineChart";
 import { PieChart } from "./PieChart";
 
-const DAY = 24 * 3600 * 1000;
+// 一天就是 86400秒
+const DAY = 24 * 60 * 60 * 1000;
+
 type Data1Item = { happen_at: string; amount: number };
 type Data1 = Data1Item[];
 type Data2Item = { tag_id: number; tag: Tag; amount: number };
@@ -31,7 +33,6 @@ export const Charts = defineComponent({
       required: false,
     },
   },
-
   setup: (props, context) => {
     const kind = ref("expenses");
     const data1 = ref<Data1>([]);
@@ -43,6 +44,7 @@ export const Charts = defineComponent({
         new Date(props.endDate).getTime() - new Date(props.startDate).getTime();
       const n = diff / DAY + 1;
       return Array.from({ length: n }).map((_, i) => {
+        // "T00:00:00.000+0800" 强制告诉 这是北京时间
         const time = new Time(props.startDate + "T00:00:00.000+0800")
           .add(i, "day")
           .getTimestamp();
@@ -64,6 +66,7 @@ export const Charts = defineComponent({
           kind: kind.value,
           group_by: "happen_at",
           _mock: "itemSummary",
+          _autoLoading: true,
         }
       );
       data1.value = response.data.groups;
@@ -85,6 +88,7 @@ export const Charts = defineComponent({
       const total = data2.value.reduce((sum, item) => sum + item.amount, 0);
       return data2.value.map((item) => ({
         ...item,
+        // Math.round() 方法 用来四舍五入
         percent: Math.round((item.amount / total) * 100),
       }));
     });
@@ -116,6 +120,7 @@ export const Charts = defineComponent({
           ]}
           v-model={kind.value}
         />
+
         <LineChart data={betterData1.value} />
         <PieChart data={betterData2.value} />
         <Bars data={betterData3.value} />

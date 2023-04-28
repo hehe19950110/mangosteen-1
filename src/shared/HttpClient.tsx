@@ -116,12 +116,15 @@ const mock = (response: AxiosResponse) => {
     case "tagEdit":
       [response.status, response.data] = mockTagEdit(response.config);
       return true;
+
     case "itemIndex":
       [response.status, response.data] = mockItemIndex(response.config);
       return true;
+
     case "itemIndexBalance":
       [response.status, response.data] = mockItemIndexBalance(response.config);
       return true;
+
     case "itemSummary":
       [response.status, response.data] = mockItemSummary(response.config);
       return true;
@@ -150,6 +153,20 @@ export const http = new Http("/api/v1");
     );
   */
 
+// http.instance.interceptors.request.use(config => {
+//   const jwt = localStorage.getItem('jwt')
+//   if (jwt) {
+//     config.headers!.Authorization = `Bearer ${jwt}`
+//   }
+//   if(config._autoLoading === true){
+//     Toast.loading({
+//       message: '加载中...',
+//       forbidClick: true,
+//       duration: 0
+//     });
+//   }
+//   return config
+// })
 // 拦截器 两个：一个是 request，一个是response
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
@@ -161,6 +178,18 @@ http.instance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// http.instance.interceptors.response.use((response)=>{
+//   if(response.config._autoLoading === true){
+//     Toast.clear();
+//   }
+//   return response
+// }, (error: AxiosError)=>{
+//   if(error.response?.config._autoLoading === true){
+//     Toast.clear();
+//   }
+//   throw error
+// })
 http.instance.interceptors.response.use(
   // 篡改 response
   (response) => {
@@ -190,8 +219,29 @@ http.instance.interceptors.response.use(
     }
   }
 );
+
 http.instance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    mock(response);
+    if (response.status >= 400) {
+      throw { response };
+    } else {
+      return response;
+    }
+  },
+  (error) => {
+    mock(error.response);
+    if (error.response.status >= 400) {
+      throw error;
+    } else {
+      return error.response;
+    }
+  }
+);
+http.instance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
   (error) => {
     if (error.response) {
       const axiosError = error as AxiosError;

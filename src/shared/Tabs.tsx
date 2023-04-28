@@ -26,7 +26,6 @@ export const Tabs = defineComponent({
           throw new Error("<Tabs> only accepts <Tab> as children");
         }
       }
-
       const cp = props.classPrefix;
       return (
         <div class={[style.tabs, cp + "_tabs"]}>
@@ -47,7 +46,6 @@ export const Tabs = defineComponent({
               </li>
             ))}
           </ol>
-
           {props.rerenderOnSelect ? (
             <div key={props.selected}>
               {tabs.find((item) => item.props?.name === props.selected)}

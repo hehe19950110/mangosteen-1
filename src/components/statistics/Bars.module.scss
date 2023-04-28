@@ -40,9 +40,11 @@
       top: 0;
       left: 0;
       height: 100%;
-      width: 42px;
+      width: 0;
+      transition: width 500ms;
     }
   }
+
   &:nth-child(1) {
     .bar_inner {
       background: #ee425f;

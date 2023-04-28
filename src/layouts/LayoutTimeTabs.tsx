@@ -42,11 +42,8 @@ export const LayoutTimeTabs = defineComponent({
       start: new Time().format(),
       end: new Time().format(),
     });
-    const customTime = reactive<{ start?: string; end?: string }>({
-      // 设定自定义时间是一个字符串：
-      start: undefined,
-      end: undefined,
-    });
+    // 设定自定义时间是一个字符串：
+    const customTime = reactive<{ start?: string; end?: string }>({});
     const timeList = [
       {
         // 本月：
@@ -104,13 +101,13 @@ export const LayoutTimeTabs = defineComponent({
                       endDate={timeList[1].end.format()}
                     />
                   </Tab>
-
+                  {/* 
                   <Tab name="今年">
                     <props.component
                       startDate={timeList[2].start.format()}
                       endDate={timeList[2].end.format()}
                     />
-                  </Tab>
+                  </Tab> */}
 
                   <Tab name="自定义时间">
                     <props.component

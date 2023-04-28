@@ -48,7 +48,6 @@ export const LineChart = defineComponent({
       required: true,
     },
   },
-
   setup: (props, context) => {
     const refDiv = ref<HTMLDivElement>();
     let chart: echarts.ECharts | undefined = undefined;
@@ -57,31 +56,9 @@ export const LineChart = defineComponent({
       if (refDiv.value === undefined) {
         return;
       }
-      /*
-      // 初始化 echarts 数据：
-      var myChart = echarts.init(refDiv.value);
-      // 绘制图表（直接在 echarts 里找模板）
-      myChart.setOption({
-        grid: [{ left: 0, top: 0, right: 0, bottom: 20 }],
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: [150, 230, 224, 218, 135, 147, 260],
-            type: "line",
-          },
-        ],
-      });
-    });
-*/
-      // 初始化 echarts 数据：
+      // 初始化echarts数据：
       chart = echarts.init(refDiv.value);
-      // 绘制图表
+      // 绘图：
       chart.setOption({
         ...echartsOption,
         series: [
@@ -92,6 +69,7 @@ export const LineChart = defineComponent({
         ],
       });
     });
+
     watch(
       () => props.data,
       () => {

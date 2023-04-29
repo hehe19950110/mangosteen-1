@@ -64,11 +64,9 @@ export const SignInPage = defineComponent({
       // 只有在没有错误的情况下 才能发请求：
       if (!hasError(errors)) {
         const response = await http
-          .post<{ jwt: string }>(
-            "/session",
-            formData
-            // { params: { _mock: "session" },}
-          )
+          .post<{ jwt: string }>("/session", formData, {
+            params: { _mock: "session" },
+          })
           .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
 
         localStorage.setItem("jwt", response.data.jwt);

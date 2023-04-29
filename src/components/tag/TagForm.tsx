@@ -51,9 +51,11 @@ export const TagForm = defineComponent({
         const promise = (await formData.id)
           ? http.patch(`/tags/${formData.id}`, formData, {
               _mock: "tagEdit",
+              _autoLoading: true,
             })
           : http.post("/tags", formData, {
               _mock: "tagCreate",
+              _autoLoading: true,
             });
         // 在 promise拿到结果后面 再去catch
         await promise.catch((error) => {

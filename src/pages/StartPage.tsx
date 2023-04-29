@@ -1,4 +1,5 @@
-import { defineComponent, ref } from "vue";
+import { Toast } from "vant";
+import { defineComponent, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { LayoutNavBar } from "../layouts/LayoutNavBar";
 import { Button } from "../shared/buttons/Button";
@@ -10,6 +11,15 @@ import style from "./StartPage.module.scss";
 
 export const StartPage = defineComponent({
   setup: (props, context) => {
+    onMounted(() => {
+      Toast.loading({
+        message: "加载中...",
+        forbidClick: true,
+        // duration	展示时长(ms)，值为 0 时，toast 不会消失
+        duration: 0,
+      });
+    });
+
     return () => (
       <LayoutNavBar>
         {{

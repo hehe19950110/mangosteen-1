@@ -4,6 +4,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
+import { Toast } from "vant";
 import {
   mockItemCreate,
   mockItemIndex,
@@ -96,7 +97,7 @@ const mock = (response: AxiosResponse) => {
     return false;
   }
   // 排除线上地址的逻辑后，再查看请求参数里 有么有_mock的参数
-  switch (response.config?.params?._mock) {
+  switch (response.config?._mock) {
     case "tagIndex":
       [response.status, response.data] = mockTagIndex(response.config);
       return true;
@@ -153,50 +154,45 @@ export const http = new Http("/api/v1");
     );
   */
 
-// http.instance.interceptors.request.use(config => {
-//   const jwt = localStorage.getItem('jwt')
-//   if (jwt) {
-//     config.headers!.Authorization = `Bearer ${jwt}`
-//   }
-//   if(config._autoLoading === true){
-//     Toast.loading({
-//       message: '加载中...',
-//       forbidClick: true,
-//       duration: 0
-//     });
-//   }
-//   return config
-// })
 // 拦截器 两个：一个是 request，一个是response
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
   if (jwt) {
-    // (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${jwt}`;
-    // 等同于：
-    config.headers!.Authorization = `Bearer ${jwt}`;
-    // config.headers！表示：断言 config.headers不为空，该语法糖的好处就是不用在意他具体的类型，ts也不会报错
+    config.headers!.Authorization = `Bearer ${jwt}`; // config.headers！表示：断言 config.headers不为空，该语法糖的好处就是不用在意他具体的类型，ts也不会报错
+    //等同于 (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${jwt}`;
+  }
+  if (config._autoLoading === true) {
+    Toast.loading({
+      message: "加载中...",
+      forbidClick: true,
+      // duration	展示时长(ms)，值为 0 时，toast 不会消失
+      duration: 0,
+    });
   }
   return config;
 });
 
-// http.instance.interceptors.response.use((response)=>{
-//   if(response.config._autoLoading === true){
-//     Toast.clear();
-//   }
-//   return response
-// }, (error: AxiosError)=>{
-//   if(error.response?.config._autoLoading === true){
-//     Toast.clear();
-//   }
-//   throw error
-// })
+// 接收两个函数，不管成功失败，都关掉 加载中:
 http.instance.interceptors.response.use(
-  // 篡改 response
+  (response) => {
+    if (response.config._autoLoading === true) {
+      Toast.clear();
+    }
+    return response;
+  },
+  (error: AxiosError) => {
+    if (error.response?.config._autoLoading === true) {
+      Toast.clear();
+    }
+    throw error;
+  }
+);
+
+http.instance.interceptors.response.use(
   (response) => {
     mock(response);
-    // 状态码大于400的时候 走报错逻辑
     if (response.status >= 400) {
-      throw { response: response };
+      throw { response };
     } else {
       return response;
     }
@@ -211,25 +207,6 @@ http.instance.interceptors.response.use(
       throw error;
     }
     */
-    mock(error.response);
-    if (error.response.status >= 400) {
-      throw error;
-    } else {
-      return error.response;
-    }
-  }
-);
-
-http.instance.interceptors.response.use(
-  (response) => {
-    mock(response);
-    if (response.status >= 400) {
-      throw { response };
-    } else {
-      return response;
-    }
-  },
-  (error) => {
     mock(error.response);
     if (error.response.status >= 400) {
       throw error;

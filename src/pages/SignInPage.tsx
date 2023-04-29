@@ -99,7 +99,11 @@ export const SignInPage = defineComponent({
     const onClickSendValidationCode = async () => {
       disabled(); // 把 布尔值 变成 TRUE; on: disabled,  on: () => (bool.value = true),
       const response = await http
-        .post("/validation_codes", { email: formData.email })
+        .post(
+          "/validation_codes",
+          { email: formData.email },
+          { _autoLoading: true }
+        )
         .catch(onError) // 有业务逻辑需要处理，所以 需要加 .catch()
         .finally(enable); // 失败了 也需要把 布尔值 变成 FALSE; off: enable,  off: () => (bool.value = false),
       // 成功

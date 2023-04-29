@@ -50,10 +50,10 @@ export const TagForm = defineComponent({
         // 如果 formData.id 存在，就 await http.patch() ； 否则 await http.post()
         const promise = (await formData.id)
           ? http.patch(`/tags/${formData.id}`, formData, {
-              params: { _mock: "tagEdit" },
+              _mock: "tagEdit",
             })
           : http.post("/tags", formData, {
-              params: { _mock: "tagCreate" },
+              _mock: "tagCreate",
             });
         // 在 promise拿到结果后面 再去catch
         await promise.catch((error) => {
@@ -69,9 +69,13 @@ export const TagForm = defineComponent({
       if (!props.id) {
         return;
       }
-      const response = await http.get<Resource<Tag>>(`/tags/${props.id}`, {
-        _mock: "tagShow",
-      });
+      const response = await http.get<Resource<Tag>>(
+        `/tags/${props.id}`,
+        {},
+        {
+          _mock: "tagShow",
+        }
+      );
       Object.assign(formData, response.data.resource);
     });
 

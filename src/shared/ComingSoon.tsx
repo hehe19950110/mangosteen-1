@@ -20,6 +20,7 @@ export const ComingSoon = defineComponent({
               <Center class={style.pig_wrapper}>
                 <Icon name="pig" class={style.pig} />
               </Center>
+
               <p class={style.text}> 敬请期待 </p>
 
               <RouterLink to="/items/create">

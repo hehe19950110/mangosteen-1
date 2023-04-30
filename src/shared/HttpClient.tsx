@@ -87,15 +87,25 @@ export class Http {
 }
 
 const mock = (response: AxiosResponse) => {
+  // 关闭 mock:
   if (
-    // 如果是以下三个地址，就篡改；（这三个地址 为线上开发时的地址）
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1" &&
-    location.hostname !== "192.168.3.57"
+    true ||
+    (location.hostname !== "localhost" &&
+      location.hostname !== "127.0.0.1" &&
+      location.hostname !== "192.168.3.57")
   ) {
-    // 如果不是以上三个地址，就返回 FALSE，即不篡改
     return false;
   }
+
+  // if (
+  //   // 如果是以下三个地址，就篡改；（这三个地址 为线上开发时的地址）
+  //   location.hostname !== "localhost" &&
+  //   location.hostname !== "127.0.0.1" &&
+  //   location.hostname !== "192.168.3.57"
+  // ) {
+  //   // 如果不是以上三个地址，就返回 FALSE，即不篡改
+  //   return false;
+  // }
   // 排除线上地址的逻辑后，再查看请求参数里 有么有_mock的参数
   switch (response.config?._mock) {
     case "tagIndex":

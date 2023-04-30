@@ -1,12 +1,19 @@
 interface FData {
-  [k: string]: string | number | null | undefined | FData;
+  //[k: string]: string | number | null | undefined | FData;
+  [k: string]: JSONValue;
 } //interface 可以循环调用自身
 
-type Rule<T> = {
-  // 共通的：
-  key: keyof T;
-  message: string;
-} & ({ type: "required" } | { type: "pattern"; regex: RegExp }); // 二选一的：
+type Rule<T> =
+  | {
+      // 共通的：
+      key: keyof T;
+      message: string;
+    } & (
+      | { type: "required" }
+      | { type: "pattern"; regex: RegExp }
+      | { type: "notEqual"; value: JSONValue }
+    );
+
 type Rules<T> = Rule<T>[];
 
 export type { Rules, Rule, FData };
@@ -18,7 +25,9 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
   rules.map((rule) => {
     const { key, type, message } = rule;
     const value = formData[key];
+
     switch (type) {
+      // 必填：
       case "required":
         //if (value === null || value === undefined || value === "") {
         if (isEmpty(value)) {
@@ -27,9 +36,18 @@ export const validate = <T extends FData>(formData: T, rules: Rules<T>) => {
         }
         break;
 
+      // 正则：
       case "pattern":
         //if (value && !rule.regex.test(value.toString())) {
         if (!isEmpty(value) && !rule.regex.test(value!.toString())) {
+          errors[key] = errors[key] ?? [];
+          errors[key]?.push(message);
+        }
+        break;
+
+      // 不等于：
+      case "notEqual":
+        if (!isEmpty(value) && value === rule.value) {
           errors[key] = errors[key] ?? [];
           errors[key]?.push(message);
         }

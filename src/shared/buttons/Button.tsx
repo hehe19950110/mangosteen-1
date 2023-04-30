@@ -42,8 +42,8 @@ export const Button = defineComponent({
         return props.disabled;
       }
     });
-    const onClick = () => {
-      props.onClick?.(); // onclick 存在 就调用
+    const onClick = (e: MouseEvent) => {
+      props.onClick?.(e); // onclick 存在 就调用
       selfDisabled.value = true;
       // 1秒后 将自我沉默 selfDisable 的值改回去：
       setTimeout(() => {

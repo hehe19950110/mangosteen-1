@@ -84,7 +84,7 @@ export const routes: RouteRecordRaw[] = [
     path: "/statistics",
     component: StatisticsPage,
   },
-  // 未做，即 敬请期待
+  // 未做，即 敬请期待:
   {
     path: "/export",
     component: ComingSoon,

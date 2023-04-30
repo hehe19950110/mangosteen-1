@@ -9,6 +9,8 @@ import { useRoute, useRouter } from "vue-router";
 import { AxiosError } from "axios";
 import { Dialog } from "vant";
 import { BackIcon } from "../../shared/Icon/BackIcon";
+import { hasError, validate } from "../../shared/validate";
+import { number } from "echarts";
 
 export const ItemCreate = defineComponent({
   props: {
@@ -17,46 +19,10 @@ export const ItemCreate = defineComponent({
     },
   },
   setup: (props, context) => {
-    /*
-    const refKind = ref("支出");
-    const {
-      tags: incomeTags,
-      hasMore: hasMore2,
-      fetchTags: fetchTags2,
-    } = useTags((page) => {
-      return http.get<Resources<Tag>>("/tags", {
-        kind: "income",
-        page: page + 1, // tag 的 page 需要更新
-        _mock: "tagIndex",
-      });
-    });
-
-    onMounted(async () => {
-      // response 除了接受普通的字符串函数 "/tags", 还接受类型参数<{ resources: Tag[] }>
-      const response = await http.get<{ resources: Tag[] }>("/tags", {
-        kind: "expenses",
-        _mock: "tagIndex",
-      });
-      refExpensesTags.value = response.data.resources;
-    });
-    const refExpensesTags = ref<Tag[]>([
-      { id: 1, name: "餐饮", sign: "￥", kind: "expenses" },  //类型 尽量不要用type，是很多编程语言内置的一个API，而是使用 kind、kind 等来表示类型
-    ]);
-
-    onMounted(async () => {
-      const response = await http.get<{ resources: Tag[] }>("/tags", {
-        kind: "income",
-        _mock: "tagIndex",
-      });
-      refIncomeTags.value = response.data.resources;
-    });
-    const refIncomeTags = ref<Tag[]>([
-      { id: 1, name: "工资", sign: "￥", kind: "income" },
-    ]);
-    */
-    const formData = reactive({
-      kind: "支出",
-      tags_id: [],
+    // Partial<Item> 需要一部分的item
+    const formData = reactive<Partial<Item>>({
+      kind: "expenses",
+      tag_ids: [],
       amount: 0,
       happen_at: new Date().toISOString(),
       //happen_at的类似是string，不能表示整时间，new Date() 可以接受字符串，所以 需要date.toISOString()，他是一个JavaScript Date对象的方法，用于将日期对象转换为 ISO 格式的字符串表示。
@@ -75,13 +41,46 @@ export const ItemCreate = defineComponent({
         // 没有地方显示错误，因此 选择dialog弹窗的形式展示
         Dialog.alert({
           title: "错误",
-          message: Object.values(error.response.data.errors).join(","),
+          message: Object.values(error.response.data.errors).join("\n"),
         });
       }
       throw error;
     };
 
     const onSubmit = async () => {
+      // 先清空 errors
+      Object.assign(errors, {
+        kind: [],
+        tag_ids: [],
+        amount: [],
+        happen_at: [],
+      });
+      Object.assign(
+        errors,
+        validate(formData, [
+          { key: "kind", type: "required", message: "类型必填" },
+          { key: "tag_ids", type: "required", message: "标签必填" },
+          { key: "amount", type: "required", message: "金额必填" },
+          {
+            key: "amount",
+            type: "notEqual",
+            value: 0,
+            message: "金额不能为0",
+          },
+          { key: "happen_at", type: "required", message: "时间必填" },
+        ])
+      ); //效验规则后 会得到一个新的errors
+
+      // 如果有错误 就弹窗打印错误：
+      if (hasError(errors)) {
+        Dialog.alert({
+          title: "错误",
+          message: Object.values(errors)
+            .filter((i) => i.length > 0)
+            .join("\n"),
+        });
+        return;
+      }
       await http
         .post<Resource<Item>>("/items", formData, {
           _mock: "itemCreate",
@@ -100,17 +99,17 @@ export const ItemCreate = defineComponent({
             <>
               <div class={style.wrapper}>
                 <Tabs v-model:selected={formData.kind} class={style.tabs}>
-                  <Tab name="支出">
+                  <Tab value="expenses" name="支出">
                     <Tags
                       kind="expenses"
-                      v-model:selected={formData.tags_id[0]}
+                      v-model:selected={formData.tag_ids![0]}
                     />
                   </Tab>
 
-                  <Tab name="收入">
+                  <Tab value="income" name="收入">
                     <Tags
                       kind="income"
-                      v-model:selected={formData.tags_id[0]}
+                      v-model:selected={formData.tag_ids![0]}
                     />
                   </Tab>
                 </Tabs>

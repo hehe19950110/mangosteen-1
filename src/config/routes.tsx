@@ -16,6 +16,7 @@ import { WelcomePage } from "../pages/WelcomePage";
 import { TagPage } from "../pages/TagPage";
 import { SignInPage } from "../pages/SignInPage";
 import { StatisticsPage } from "../pages/StatisticsPage";
+import { ComingSoon } from "../shared/ComingSoon";
 
 // 因需要检查登录状态的页面更多，
 // 可反向设置路由，
@@ -82,5 +83,14 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/statistics",
     component: StatisticsPage,
+  },
+  // 未做，即 敬请期待
+  {
+    path: "/export",
+    component: ComingSoon,
+  },
+  {
+    path: "/notify",
+    component: ComingSoon,
   },
 ];

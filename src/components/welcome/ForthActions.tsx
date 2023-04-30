@@ -10,14 +10,12 @@ const onClick = () => {
 export const ForthActions: FunctionalComponent = () => {
   return (
     <div class={style.actions}>
-      {/* <RouterLink class={style.fake} to="/start">跳过</RouterLink> */}
       <SkipAD class={style.fake} />
 
       <span onClick={onClick}>
-        <RouterLink to="/start">完成</RouterLink>
+        <RouterLink to="/items">完成</RouterLink>
       </span>
 
-      {/* <RouterLink class={style.fake} to="/start">跳过</RouterLink> */}
       <SkipAD class={style.fake} />
     </div>
   );

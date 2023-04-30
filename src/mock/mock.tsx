@@ -134,28 +134,6 @@ export const mockItemIndex: Mock = (config) => {
     return [200, {}];
   }
 };
-export const mockTagEdit: Mock = (config) => {
-  const createTag = (attrs?: any) => ({
-    id: createId(),
-    name: faker.lorem.word(),
-    sign: faker.internet.emoji(),
-    kind: "expenses",
-    ...attrs,
-  });
-  return [200, { resource: createTag() }];
-};
-
-export const mockTagShow: Mock = (config) => {
-  const createTag = (attrs?: any) => ({
-    id: createId(),
-    name: faker.lorem.word(),
-    sign: faker.internet.emoji(),
-    kind: "expenses",
-    ...attrs,
-  });
-  return [200, { resource: createTag() }];
-};
-
 export const mockItemCreate: Mock = (config) => {
   return [
     200,
@@ -174,6 +152,7 @@ export const mockItemCreate: Mock = (config) => {
     },
   ];
 };
+
 export const mockSession: Mock = (config) => {
   return [
     200,
@@ -219,4 +198,24 @@ export const mockTagIndex: Mock = (config) => {
   } else {
     return [200, createBody(1)];
   }
+};
+export const mockTagEdit: Mock = (config) => {
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: "expenses",
+    ...attrs,
+  });
+  return [200, { resource: createTag() }];
+};
+export const mockTagShow: Mock = (config) => {
+  const createTag = (attrs?: any) => ({
+    id: createId(),
+    name: faker.lorem.word(),
+    sign: faker.internet.emoji(),
+    kind: "expenses",
+    ...attrs,
+  });
+  return [200, { resource: createTag() }];
 };

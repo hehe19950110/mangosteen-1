@@ -12,7 +12,6 @@ import { TagCreate } from "../components/tag/TagCreate";
 import { TagEdit } from "../components/tag/TagEdit";
 import { ItemList } from "../components/item/ItemList";
 import { ItemPage } from "../pages/ItemPage";
-import { StartPage } from "../pages/StartPage";
 import { WelcomePage } from "../pages/WelcomePage";
 import { TagPage } from "../pages/TagPage";
 import { SignInPage } from "../pages/SignInPage";
@@ -30,7 +29,7 @@ export const routes: RouteRecordRaw[] = [
     component: WelcomePage,
     // 定义路由的时候 直接检查
     beforeEnter: (to, from, next) => {
-      localStorage.getItem("skipAD") === "yes" ? next("/start") : next();
+      localStorage.getItem("skipAD") === "yes" ? next("/items") : next();
     },
     children: [
       { path: "", redirect: "/welcome/1" }, //默认到/welcome/1
@@ -57,8 +56,7 @@ export const routes: RouteRecordRaw[] = [
     ],
   },
 
-  { path: "/start", component: StartPage },
-
+  // 合并items与start页面: { path: "/start", component: StartPage },
   {
     path: "/items",
     component: ItemPage,

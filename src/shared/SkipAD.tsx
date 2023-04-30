@@ -1,5 +1,5 @@
-import { defineComponent, PropType } from "vue";
-import { RouteLocationNamedRaw, RouterLink } from "vue-router";
+import { defineComponent } from "vue";
+import { RouterLink } from "vue-router";
 
 export const SkipAD = defineComponent({
   setup: (props, context) => {
@@ -8,7 +8,7 @@ export const SkipAD = defineComponent({
     };
     return () => (
       <span onClick={onClick}>
-        <RouterLink to="/start">跳过</RouterLink>
+        <RouterLink to="/items">跳过</RouterLink>
       </span>
     );
   },

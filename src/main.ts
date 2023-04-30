@@ -16,7 +16,7 @@ fetchMe();
 // 设置登录验证的路由白名单：
 const whiteList: Record<string, "exact" | "startsWith"> = {
   "/": "exact",
-  "/start": "exact",
+  "/items": "exact",
   "/welcome": "startsWith",
   "/sign_in": "startsWith",
 };
@@ -28,7 +28,7 @@ const promise = http.get('/me')
 router.beforeEach(async(to, from) => {
   if(to.path === '/' || to.path.startsWith('/welcome') 
                     || to.path.startsWith('/sign_in') 
-                    || to.path === '/start'){
+                    || to.path === '/items'){
     return true
   } else {
     const path = await mePromise.then( 

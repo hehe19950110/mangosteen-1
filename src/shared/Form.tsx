@@ -27,7 +27,7 @@ export const FormItem = defineComponent({
       type: String,
     },
     modelValue: {
-      type: [String, Number],
+      type: [String, Number, Date],
     },
     type: {
       type: String as PropType<
@@ -43,7 +43,7 @@ export const FormItem = defineComponent({
     countFrom: {
       type: Number,
       default: 60,
-    }, // 默认值是60
+    },
     disabled: Boolean,
   },
   emits: ["update:modelValue"],
@@ -130,8 +130,7 @@ export const FormItem = defineComponent({
                 value={props.modelValue}
                 placeholder={props.placeholder}
                 onClick={() => {
-                  // 点击时，调出 弹窗时间框
-                  refDateVisible.value = true;
+                  refDateVisible.value = true; // 点击时，调出 弹窗时间框
                 }}
                 class={[style.formItem, style.input]}
               />

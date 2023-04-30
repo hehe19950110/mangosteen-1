@@ -1,5 +1,5 @@
 import { Dialog } from "vant";
-import { defineComponent, reactive } from "vue";
+import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { LayoutNavBar } from "../../layouts/LayoutNavBar";
 import { Button } from "../../shared/buttons/Button";

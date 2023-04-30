@@ -30,9 +30,7 @@ export const ItemCreate = defineComponent({
         _mock: "tagIndex",
       });
     });
-    */
 
-    /*
     onMounted(async () => {
       // response 除了接受普通的字符串函数 "/tags", 还接受类型参数<{ resources: Tag[] }>
       const response = await http.get<{ resources: Tag[] }>("/tags", {
@@ -61,12 +59,17 @@ export const ItemCreate = defineComponent({
       tags_id: [],
       amount: 0,
       happen_at: new Date().toISOString(),
-      // new Date() 可以接受字符串，date.toISOString() 是一个 JavaScript Date对象的方法，用于将日期对象转换为 ISO 格式的字符串表示。
+      //happen_at的类似是string，不能表示整时间，new Date() 可以接受字符串，所以 需要date.toISOString()，他是一个JavaScript Date对象的方法，用于将日期对象转换为 ISO 格式的字符串表示。
     });
 
-    const route = useRoute();
     const router = useRouter();
 
+    const errors = reactive<FormErrors<typeof formData>>({
+      kind: [],
+      tag_ids: [],
+      amount: [],
+      happen_at: [],
+    });
     const onError = (error: AxiosError<ResourceError>) => {
       if (error.response?.status === 422) {
         // 没有地方显示错误，因此 选择dialog弹窗的形式展示

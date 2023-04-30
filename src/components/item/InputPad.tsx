@@ -9,13 +9,13 @@ export const InputPad = defineComponent({
     happenAt: String,
     amount: Number,
     onSubmit: {
-      type: Function as PropType<(happenAt: string, amount: number) => void>,
+      type: Function as PropType<() => void>,
     },
   },
 
   setup: (props, context) => {
-    // const now = new Date();
-    // const refDate = ref<Date>(now);
+    const now = new Date();
+    const refDate = ref<Date>(now);
     const appendText = (n: number | string) => {
       const nString = n.toString();
       const dotIndex = refAmount.value.indexOf("."); //小数点的位置
@@ -154,7 +154,9 @@ export const InputPad = defineComponent({
                 v-model:show={refDatePickerVisible.value}
               >
                 <DatetimePicker
-                  value={props.happenAt}
+                  modellValue={
+                    props.happenAt ? new Date(props.happenAt) : new Date()
+                  }
                   type="date"
                   title="选择年月日"
                   onConfirm={setDate}

@@ -14,7 +14,7 @@ export const Tags = defineComponent({
     },
     selected: Number,
   },
-  emits: ["update:selected"], // 类型兼容
+  emits: ["update:selected"],
 
   setup: (props, context) => {
     const { tags, hasMore, page, fetchTags } = useTags((page) => {

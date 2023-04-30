@@ -11,14 +11,14 @@ import style from "./StartPage.module.scss";
 
 export const StartPage = defineComponent({
   setup: (props, context) => {
-    onMounted(() => {
-      Toast.loading({
-        message: "加载中...",
-        forbidClick: true,
-        // duration	展示时长(ms)，值为 0 时，toast 不会消失
-        duration: 0,
-      });
-    });
+    // onMounted(() => {
+    //   Toast.loading({
+    //     message: "加载中...",
+    //     forbidClick: true,
+    //     // duration	展示时长(ms)，值为 0 时，toast 不会消失
+    //     duration: 0,
+    //   });
+    // });
 
     return () => (
       <LayoutNavBar>

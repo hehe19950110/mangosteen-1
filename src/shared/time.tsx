@@ -4,7 +4,7 @@ export class Time {
     if (date === undefined) {
       this.date = new Date();
     } else if (typeof date === "string") {
-      this.date = new Date(date); // new Date 可以接受字符串
+      this.date = new Date(date);
     } else {
       this.date = date;
     }

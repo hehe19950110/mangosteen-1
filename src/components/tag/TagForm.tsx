@@ -15,11 +15,6 @@ export const TagForm = defineComponent({
   setup: (props, context) => {
     const route = useRoute();
     const router = useRouter();
-    if (!route.query.kind) {
-      return () => {
-        <div>参数错误</div>;
-      };
-    }
     const formData = reactive({
       id: undefined,
       name: "",
@@ -31,14 +26,14 @@ export const TagForm = defineComponent({
     const onSubmit = async (e: Event) => {
       e.preventDefault();
       const rules: Rules<typeof formData> = [
-        { key: "name", type: "required", message: "必填" },
+        { key: "name", type: "required", message: "标签名必填" },
         {
           key: "name",
           type: "pattern",
           regex: /^.{1,4}$/,
           message: "只能填 1 ~ 4 个字符",
         },
-        { key: "sign", type: "required", message: "必填" },
+        { key: "sign", type: "required", message: "符号必填" },
       ];
       Object.assign(errors, {
         name: [],
@@ -66,6 +61,7 @@ export const TagForm = defineComponent({
         router.back();
       }
     };
+
     onMounted(async () => {
       // 如果 props 没有传id，就 return
       if (!props.id) {

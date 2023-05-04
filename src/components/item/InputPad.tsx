@@ -14,8 +14,6 @@ export const InputPad = defineComponent({
   },
 
   setup: (props, context) => {
-    const now = new Date();
-    const refDate = ref<Date>(now);
     const appendText = (n: number | string) => {
       const nString = n.toString();
       const dotIndex = refAmount.value.indexOf("."); //小数点的位置

@@ -83,7 +83,7 @@ export const LayoutTimeTabs = defineComponent({
             <>
               {props.hideThisYear ? (
                 <Tabs
-                  classPrefix={"customTabs"}
+                  classPrefix="customTabs"
                   v-model:selected={refSelected.value}
                   onUpdate:selected={onSelect}
                   rerenderOnSelect={props.rerenderOnSwitchTab}
@@ -94,14 +94,12 @@ export const LayoutTimeTabs = defineComponent({
                       endDate={timeList[0].end.format()}
                     />
                   </Tab>
-
                   <Tab value="上月" name="上月">
                     <props.component
                       startDate={timeList[1].start.format()}
                       endDate={timeList[1].end.format()}
                     />
                   </Tab>
-
                   <Tab value="自定义时间" name="自定义时间">
                     <props.component
                       startDate={customTime.start}
@@ -142,7 +140,6 @@ export const LayoutTimeTabs = defineComponent({
                   </Tab>
                 </Tabs>
               )}
-
               {/*使用 vant 的 Overlay组件 实现自定义时间部分的弹窗对话框:*/}
               <Overlay show={refOverlayVisible.value} class={style.overlay}>
                 <div class={style.overlay_inner}>
@@ -151,15 +148,14 @@ export const LayoutTimeTabs = defineComponent({
                     <Form onSubmit={onSubmitCustomTime}>
                       <FormItem
                         label="开始时间"
-                        v-model={customTime.start}
+                        v-model={tempTime.start}
                         type="date"
                       />
                       <FormItem
                         label="结束时间"
-                        v-model={customTime.end}
+                        v-model={tempTime.end}
                         type="date"
                       />
-
                       <FormItem>
                         <div class={style.actions}>
                           <button

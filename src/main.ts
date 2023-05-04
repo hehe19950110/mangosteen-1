@@ -4,14 +4,23 @@ import { createRouter } from "vue-router";
 import { history } from "./shared/history";
 import { routes } from "./config/routes";
 import "@svgstore";
-import { fetchMe, mePromise } from "./shared/me";
+import { createPinia, storeToRefs } from "pinia";
+import { useMeStore } from "./stores/useMeStore";
 
 const router = createRouter({
   history,
   routes,
 });
 
-fetchMe();
+const pinia = createPinia();
+const app = createApp(App);
+app.use(router);
+app.use(pinia);
+app.mount("#app");
+
+const meStore = useMeStore();
+const { mePromise } = storeToRefs(meStore);
+meStore.fetchMe();
 
 // 设置登录验证的路由白名单：
 const whiteList: Record<string, "exact" | "startsWith"> = {
@@ -51,13 +60,13 @@ router.beforeEach((to, from) => {
       return true;
     }
   }
-  return mePromise!.then(
+  return mePromise!.value!.then(
     () => true,
     () => "/sign_in?return_to=" + to.path
   );
 });
 
-const app = createApp(App);
-app.use(router);
-app.mount("#app");
+// const app = createApp(App);
+// app.use(router);
+// app.mount("#app");
 //app 先创建 后挂载

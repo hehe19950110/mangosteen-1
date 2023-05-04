@@ -10,9 +10,12 @@ import { useBoolean } from "../hooks/useBoolean";
 import { useRoute, useRouter } from "vue-router";
 import { refreshMe } from "../shared/me";
 import { BackIcon } from "../shared/Icon/BackIcon";
+import { useMeStore } from "../stores/useMeStore";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
+    const meStore = useMeStore;
+
     const formData = reactive({
       email: "18807378000@139.com",
       code: "",
@@ -64,9 +67,7 @@ export const SignInPage = defineComponent({
       // 只有在没有错误的情况下 才能发请求：
       if (!hasError(errors)) {
         const response = await http
-          .post<{ jwt: string }>("/session", formData, {
-            params: { _mock: "session" },
-          })
+          .post<{ jwt: string }>("/session", formData, { _autoLoading: true })
           .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
 
         localStorage.setItem("jwt", response.data.jwt);
@@ -74,7 +75,7 @@ export const SignInPage = defineComponent({
         const returnTo = route.query.return_to?.toString(); // 也可以写成 router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
 
         // 在用户登录成功之后，在页面跳转之前，主动更新，及把promise 重新附一个值
-        refreshMe();
+        meStore.refreshMe();
         router.push(returnTo ? returnTo : "/"); // 也可以写成：  router.push(returnTo || "/");
       }
     };

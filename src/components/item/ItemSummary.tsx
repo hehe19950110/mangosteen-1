@@ -15,6 +15,7 @@ import { Datetime } from "../../shared/DateTime";
 import { Center } from "../../shared/Center";
 import { Icon } from "../../shared/Icon/Icon";
 import { RouterLink } from "vue-router";
+import { useAfterMe } from "../../hooks/useAfterMe";
 
 export const ItemSummary = defineComponent({
   props: {
@@ -53,8 +54,8 @@ export const ItemSummary = defineComponent({
         (pager.page - 1) * pager.per_page + resources.length < pager.count;
       page.value += 1;
     };
-    onMounted(fetchItems);
-
+    //onMounted(fetchItems);
+    useAfterMe(fetchItems);
     watch(
       () => [props.startDate, props.endDate],
       // 重置 items、hasMore、page：
@@ -88,7 +89,8 @@ export const ItemSummary = defineComponent({
       );
       Object.assign(itemsBalance, response.data);
     };
-    onMounted(fetchItemsBalance);
+    //onMounted(fetchItemsBalance);
+    useAfterMe(fetchItemsBalance);
     watch(
       () => [props.startDate, props.endDate],
       // 先把itemBalance 中的数据 重置为0：

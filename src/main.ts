@@ -6,6 +6,7 @@ import { routes } from "./config/routes";
 import "@svgstore";
 import { createPinia, storeToRefs } from "pinia";
 import { useMeStore } from "./stores/useMeStore";
+import { Dialog } from "vant";
 
 const router = createRouter({
   history,
@@ -17,6 +18,11 @@ const app = createApp(App);
 app.use(router);
 app.use(pinia);
 app.mount("#app");
+
+// const app = createApp(App);
+// app.use(router);
+// app.mount("#app");
+//app 先创建 后挂载
 
 const meStore = useMeStore();
 const { mePromise } = storeToRefs(meStore);
@@ -62,11 +68,8 @@ router.beforeEach((to, from) => {
   }
   return mePromise!.value!.then(
     () => true,
-    () => "/sign_in?return_to=" + to.path
+    () => {
+      "/sign_in?return_to=" + from.path;
+    }
   );
 });
-
-// const app = createApp(App);
-// app.use(router);
-// app.mount("#app");
-//app 先创建 后挂载

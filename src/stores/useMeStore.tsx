@@ -10,6 +10,7 @@ type MeActions = {
   refreshMe: () => void;
   fetchMe: () => void;
 };
+
 export const useMeStore = defineStore<string, MeState, {}, MeActions>("me", {
   state: () => ({
     me: undefined,

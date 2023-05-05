@@ -14,7 +14,7 @@ import { useMeStore } from "../stores/useMeStore";
 
 export const SignInPage = defineComponent({
   setup: (props, context) => {
-    const meStore = useMeStore;
+    const meStore = useMeStore();
 
     const formData = reactive({
       email: "18807378000@139.com",
@@ -65,18 +65,16 @@ export const SignInPage = defineComponent({
       // 因为errors 是个对象，不为空，只是里面的每一个数组可以为空 Object.assign (errors, {email: [],code: [], });
       // 所以 需要遍历数组 从未判断 每一个key对应的value为空
       // 只有在没有错误的情况下 才能发请求：
+
       if (!hasError(errors)) {
         const response = await http
           .post<{ jwt: string }>("/session", formData, { _autoLoading: true })
           .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
-
         localStorage.setItem("jwt", response.data.jwt);
         //  history.push("/");  错误 只切换地址栏、不切换页面 改为：router.push("/");
         const returnTo = route.query.return_to?.toString(); // 也可以写成 router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
-
-        // 在用户登录成功之后，在页面跳转之前，主动更新，及把promise 重新附一个值
         meStore.refreshMe();
-        router.push(returnTo ? returnTo : "/"); // 也可以写成：  router.push(returnTo || "/");
+        router.push(returnTo || "/");
       }
     };
 

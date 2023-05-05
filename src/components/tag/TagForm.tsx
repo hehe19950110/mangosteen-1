@@ -19,7 +19,7 @@ export const TagForm = defineComponent({
       id: undefined,
       name: "",
       sign: "",
-      kind: route.query.kind?.toString() as "expenses" | "income",
+      kind: route.query.kind!.toString() as "expenses" | "income",
     });
 
     const errors = reactive<FormErrors<typeof formData>>({});

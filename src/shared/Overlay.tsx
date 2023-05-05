@@ -3,7 +3,6 @@ import { defineComponent, onMounted, PropType, ref } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import { useMeStore } from "../stores/useMeStore";
 import { Icon } from "./Icon/Icon";
-import { mePromise } from "./me";
 import style from "./Overlay.module.scss";
 
 export const Overlay = defineComponent({

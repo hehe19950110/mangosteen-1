@@ -16,6 +16,7 @@ import { Center } from "../../shared/Center";
 import { Icon } from "../../shared/Icon/Icon";
 import { RouterLink } from "vue-router";
 import { useAfterMe } from "../../hooks/useAfterMe";
+import { useItemStore } from "../../stores/useItemStore";
 
 export const ItemSummary = defineComponent({
   props: {
@@ -30,6 +31,7 @@ export const ItemSummary = defineComponent({
   },
 
   setup: (props, context) => {
+    /*
     const items = ref<Item[]>([]);
     const hasMore = ref(false);
     const page = ref(0);
@@ -56,14 +58,19 @@ export const ItemSummary = defineComponent({
     };
     //onMounted(fetchItems);
     useAfterMe(fetchItems);
+    */
+    if (!props.startDate || !props.endDate) {
+      return () => <div>请先选择时间范围</div>;
+    }
+    const itemStore = useItemStore(["items", props.startDate, props.endDate]);
+    useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate));
+
     watch(
       () => [props.startDate, props.endDate],
       // 重置 items、hasMore、page：
       () => {
-        items.value = [];
-        hasMore.value = false;
-        page.value = 0;
-        fetchItems();
+        itemStore.$reset();
+        itemStore.fetchItems();
       }
     );
 
@@ -81,7 +88,7 @@ export const ItemSummary = defineComponent({
         {
           happen_after: props.startDate,
           happen_before: props.endDate,
-          page: page.value + 1,
+          //page: page.value + 1,
         },
         {
           _mock: "itemIndexBalance",
@@ -106,7 +113,7 @@ export const ItemSummary = defineComponent({
 
     return () => (
       <div class={style.wrapper}>
-        {items.value && items.value.length > 0 ? (
+        {itemStore.items && itemStore.items.length > 0 ? (
           <>
             <ul class={style.total}>
               <li>
@@ -124,7 +131,7 @@ export const ItemSummary = defineComponent({
             </ul>
 
             <ol class={style.list}>
-              {items.value.map((item) => (
+              {itemStore.items.map((item) => (
                 <li>
                   <div class={style.sign}>
                     <span>
@@ -153,8 +160,14 @@ export const ItemSummary = defineComponent({
             </ol>
 
             <div class={style.more}>
-              {hasMore.value ? (
-                <Button onClick={fetchItems}>向下滑动加载更多</Button>
+              {itemStore.hasMore ? (
+                <Button
+                  onClick={() =>
+                    itemStore.fetchNextPage(props.startDate, props.endDate)
+                  }
+                >
+                  向下滑动加载更多
+                </Button>
               ) : (
                 <span>没有更多</span>
               )}

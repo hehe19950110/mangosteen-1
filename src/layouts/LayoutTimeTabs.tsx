@@ -43,7 +43,10 @@ export const LayoutTimeTabs = defineComponent({
       end: new Time().format(),
     });
     // 设定自定义时间是一个字符串：
-    const customTime = reactive<{ start?: string; end?: string }>({});
+    const customTime = reactive<{
+      start?: string;
+      end?: string;
+    }>({});
     const timeList = [
       {
         // 本月：

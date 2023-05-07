@@ -1,12 +1,5 @@
 import style from "./ItemSummary.module.scss";
-import {
-  defineComponent,
-  onMounted,
-  PropType,
-  reactive,
-  ref,
-  watch,
-} from "vue";
+import { defineComponent, PropType, reactive, watch } from "vue";
 import { FloatButton } from "../../shared/buttons/FloatButton";
 import { http } from "../../shared/HttpClient";
 import { Button } from "../../shared/buttons/Button";
@@ -60,7 +53,7 @@ export const ItemSummary = defineComponent({
     useAfterMe(fetchItems);
     */
     if (!props.startDate || !props.endDate) {
-      return () => <div>请先选择时间范围</div>;
+      return () => <div>请选择时间范围</div>;
     }
     const itemStore = useItemStore(["items", props.startDate, props.endDate]);
     useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate));
@@ -140,6 +133,7 @@ export const ItemSummary = defineComponent({
                         : "💰"}
                     </span>
                   </div>
+
                   <div class={style.text}>
                     <div class={style.tagAndAmount}>
                       <span class={style.tag}>

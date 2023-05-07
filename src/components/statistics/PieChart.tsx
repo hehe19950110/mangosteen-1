@@ -4,21 +4,6 @@ import * as echarts from "echarts";
 import { getMoney } from "../../shared/Money";
 
 const defaultOption = {
-  // grid: [{ left: 0, top: 0, right: 0, bottom: 20 }],
-  // series: [
-  //   {
-  //     name: "Access From",
-  //     type: "pie",
-  //     radius: "50%",
-  //     emphasis: {
-  //       itemStyle: {
-  //         shadowBlur: 10,
-  //         shadowOffsetX: 0,
-  //         shadowColor: "rgba(0, 0, 0, 0.5)",
-  //       },
-  //     },
-  //   },
-  // ],
   tooltip: {
     trigger: "item",
     formatter: (x: { name: string; value: number; percent: number }) => {
@@ -55,6 +40,7 @@ export const PieChart = defineComponent({
       if (refDiv2.value === undefined) {
         return;
       }
+      // 初始化echarts数据：
       chart = echarts.init(refDiv2.value);
       chart.setOption(defaultOption);
     });

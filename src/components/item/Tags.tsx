@@ -42,7 +42,6 @@ export const Tags = defineComponent({
     const onLongPress = (tagId: Tag["id"]) => {
       // 从 onTouchStart 里拿到 tagId
       router.push(`/tags/${tagId}/edit?kind=${props.kind}`);
-      console.log("长按");
     };
     const onTouchStart = (e: TouchEvent, tag: Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement;

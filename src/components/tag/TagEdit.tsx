@@ -21,7 +21,7 @@ export const TagEdit = defineComponent({
     const onError = () => {
       Dialog.alert({ title: "提示", message: "删除失败" });
     };
-    const onDeleteTag = async (options?: { withItems?: boolean }) => {
+    const onDelete = async (options?: { withItems?: boolean }) => {
       await Dialog.confirm({
         title: "确认",
         message: "你真的要删除标签吗？",
@@ -50,18 +50,10 @@ export const TagEdit = defineComponent({
               <TagForm id={numberId} />
 
               <div class={style.actions}>
-                {/* <Button
-                  level="danger"
-                  class={style.removeTags}
-                  onClick={() => onDeleteTag()}
-                >
-                  删除标签
-                </Button> */}
-
                 <Button
                   level="danger"
                   class={style.removeTagsAndItems}
-                  onClick={() => onDeleteTag({ withItems: true })}
+                  onClick={() => onDelete({ withItems: true })}
                 >
                   删除标签及对应记账记录
                 </Button>

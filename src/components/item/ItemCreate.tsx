@@ -10,7 +10,6 @@ import { AxiosError } from "axios";
 import { Dialog } from "vant";
 import { BackIcon } from "../../shared/Icon/BackIcon";
 import { hasError, validate } from "../../shared/validate";
-import { number } from "echarts";
 
 export const ItemCreate = defineComponent({
   props: {

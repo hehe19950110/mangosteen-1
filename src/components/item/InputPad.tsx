@@ -44,6 +44,7 @@ export const InputPad = defineComponent({
       }
       refAmount.value += n.toString();
     };
+
     const buttons = [
       {
         text: "1",
@@ -143,6 +144,7 @@ export const InputPad = defineComponent({
         <div class={style.dateAndAmount}>
           <span class={style.date}>
             <Icon name="date" class={style.icon} />
+
             <span>
               <span onClick={showDatePicker}>
                 {new Time(props.happenAt).format()}

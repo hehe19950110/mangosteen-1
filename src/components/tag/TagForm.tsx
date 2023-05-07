@@ -31,7 +31,7 @@ export const TagForm = defineComponent({
           key: "name",
           type: "pattern",
           regex: /^.{1,4}$/,
-          message: "只能填 1 ~ 4 个字符",
+          message: "标签名只能填 1 ~ 4 个字符",
         },
         { key: "sign", type: "required", message: "符号必填" },
       ];
@@ -95,7 +95,7 @@ export const TagForm = defineComponent({
         />
 
         <FormItem>
-          <p class={style.tips}>记账时长按标签即可进行编辑</p>
+          <p class={style.tips}>记账时长按标签 即可进行编辑</p>
         </FormItem>
 
         <FormItem>

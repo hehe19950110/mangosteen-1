@@ -33,6 +33,7 @@ export const Charts = defineComponent({
       required: false,
     },
   },
+
   setup: (props, context) => {
     const kind = ref("expenses");
     const data1 = ref<Data1>([]);
@@ -56,7 +57,6 @@ export const Charts = defineComponent({
         return [new Date(time).toISOString(), amount];
       });
     });
-
     const fetchData1 = async () => {
       const response = await http.get<{ groups: Data1; summary: number }>(
         "/items/summary",
@@ -65,6 +65,8 @@ export const Charts = defineComponent({
           happen_before: props.endDate,
           kind: kind.value,
           group_by: "happen_at",
+        },
+        {
           _mock: "itemSummary",
           _autoLoading: true,
         }

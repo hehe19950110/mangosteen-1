@@ -23,8 +23,7 @@ type PatchConfig = Omit<AxiosRequestConfig, "url" | "data">;
 type DeleteConfig = Omit<AxiosRequestConfig, "params">;
 
 export class Http {
-  // 构造时 还是使用到了 axios，所以 添加实例 AxiosInstance
-  instance: AxiosInstance;
+  instance: AxiosInstance; // 构造时 还是使用到了 axios，所以 添加实例 AxiosInstance
   constructor(baseURL: string) {
     this.instance = axios.create({
       baseURL,
@@ -87,16 +86,6 @@ export class Http {
 }
 
 const mock = (response: AxiosResponse) => {
-  // 关闭 mock:
-  if (
-    true ||
-    (location.hostname !== "localhost" &&
-      location.hostname !== "127.0.0.1" &&
-      location.hostname !== "192.168.3.57")
-  ) {
-    return false;
-  }
-
   // if (
   //   // 如果是以下三个地址，就篡改；（这三个地址 为线上开发时的地址）
   //   location.hostname !== "localhost" &&
@@ -107,6 +96,15 @@ const mock = (response: AxiosResponse) => {
   //   return false;
   // }
   // 排除线上地址的逻辑后，再查看请求参数里 有么有_mock的参数
+  if (
+    true ||
+    (location.hostname !== "localhost" &&
+      location.hostname !== "127.0.0.1" &&
+      location.hostname !== "192.168.3.57")
+  ) {
+    return false;
+  }
+
   switch (response.config?._mock) {
     case "tagIndex":
       [response.status, response.data] = mockTagIndex(response.config);
@@ -175,8 +173,7 @@ http.instance.interceptors.request.use((config) => {
     Toast.loading({
       message: "加载中...",
       forbidClick: true,
-      // duration	展示时长(ms)，值为 0 时，toast 不会消失
-      duration: 0,
+      duration: 0, // duration	展示时长(ms)，值为 0 时，toast 不会消失
     });
   }
   return config;
@@ -233,7 +230,7 @@ http.instance.interceptors.response.use(
     if (error.response) {
       const axiosError = error as AxiosError;
       if (axiosError.response?.status === 429) {
-        alert("你太频繁了");
+        alert("你操作太频繁了");
       }
     }
     throw error;

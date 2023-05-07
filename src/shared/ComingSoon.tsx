@@ -5,10 +5,14 @@ import { FloatButton } from "./buttons/FloatButton";
 import { Center } from "./Center";
 import style from "./ComingSoon.module.scss";
 import { Icon } from "./Icon/Icon";
-import { Navbar } from "./Navbar";
 import { OverlayIcon } from "./Overlay";
 
 export const ComingSoon = defineComponent({
+  props: {
+    name: {
+      type: String as PropType<string>,
+    },
+  },
   setup: (props, context) => {
     return () => (
       <LayoutNavBar>

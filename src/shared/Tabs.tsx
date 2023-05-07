@@ -27,6 +27,7 @@ export const Tabs = defineComponent({
         }
       }
       const cp = props.classPrefix;
+
       return (
         <div class={[style.tabs, cp + "_tabs"]}>
           <ol class={[style.tabs_nav, cp + "_tabs_nav"]}>

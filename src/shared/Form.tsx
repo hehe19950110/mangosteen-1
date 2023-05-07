@@ -162,11 +162,11 @@ export const FormItem = defineComponent({
             <>
               <input
                 class={[style.formItem, style.input, style.validationCodeInput]}
-                placeholder={props.placeholder}
                 value={props.modelValue}
                 onInput={(e: any) =>
                   context.emit("update:modelValue", e.target.value)
                 }
+                placeholder={props.placeholder}
               />
               <Button
                 disabled={isCounting.value || props.disabled}
@@ -214,6 +214,7 @@ export const FormItem = defineComponent({
               <span class={style.formItem_name}>{props.label}</span>
             )}
             <div class={style.formItem_value}>{content.value}</div>
+
             {/* 如果error存在 就展示error 
                 {props.error && (
                   <div class={style.formItem_errorHint}>

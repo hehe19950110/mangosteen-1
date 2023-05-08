@@ -166,7 +166,8 @@ export const http = new Http("/api/v1");
 http.instance.interceptors.request.use((config) => {
   const jwt = localStorage.getItem("jwt");
   if (jwt) {
-    config.headers!.Authorization = `Bearer ${jwt}`; // config.headers！表示：断言 config.headers不为空，该语法糖的好处就是不用在意他具体的类型，ts也不会报错
+    config.headers!.Authorization = `Bearer ${jwt}`;
+    // config.headers！表示：断言 config.headers不为空，该语法糖的好处就是不用在意他具体的类型，ts也不会报错
     //等同于 (config.headers as AxiosRequestHeaders).Authorization = `Bearer ${jwt}`;
   }
   if (config._autoLoading === true) {

@@ -1,11 +1,10 @@
 /* eslint-disable */
 import path from "path";
 import fs from "fs";
-import store from "svgstore"; //用于制作 SVG Sprites
-import { optimize } from "svgo"; //用于优化 SVG 文件
+import store from "svgstore"; // 用于制作 SVG Sprites
+import { optimize } from "svgo"; // 用于优化 SVG 文件
 
 //插件 是运行在nodejs上面 不是浏览器上面
-
 export const svgstore = (options = {}) => {
   const inputFolder = options.inputFolder || "src/assets/icons"; //明确读取的目录
   return {
@@ -43,23 +42,23 @@ export const svgstore = (options = {}) => {
           }
         );
         return `const div = document.createElement('div')
-                div.innerHTML = \`${code}\`
-                const svg = div.getElementsByTagName('svg')[0]
-                if (svg) {
-                  svg.style.position = 'absolute'
-                  svg.style.width = 0
-                  svg.style.height = 0
-                  svg.style.overflow = 'hidden'
-                  svg.setAttribute("aria-hidden", "true")
-                }
-                // listen dom ready event
-                document.addEventListener('DOMContentLoaded', () => {
-                  if (document.body.firstChild) {
-                    document.body.insertBefore(div, document.body.firstChild)
-                  } else {
-                    document.body.appendChild(div)
-                  }
-                })`;
+div.innerHTML = \`${code}\`
+const svg = div.getElementsByTagName('svg')[0]
+if (svg) {
+  svg.style.position = 'absolute'
+  svg.style.width = 0
+  svg.style.height = 0
+  svg.style.overflow = 'hidden'
+  svg.setAttribute("aria-hidden", "true")
+}
+// listen dom ready event
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.body.firstChild) {
+    document.body.insertBefore(div, document.body.firstChild)
+  } else {
+    document.body.appendChild(div)
+  }
+})`;
       }
     },
   };

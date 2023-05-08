@@ -5,7 +5,7 @@ import { svgstore } from "./src/vite_plugins/svgstore";
 import styleImport, { VantResolve } from "vite-plugin-style-import";
 
 export default defineConfig({
-  // base: "/mangosteen-1/dist/",
+  base: "/mangosteen-fe-1/dist/",
   plugins: [
     vue(),
     vueJsx({
@@ -13,9 +13,9 @@ export default defineConfig({
       mergeProps: true,
     }),
     svgstore(),
-    // styleImport({
-    //   resolves: [VantResolve()],
-    // }),
+    styleImport({
+      resolves: [VantResolve()],
+    }),
   ],
   server: {
     proxy: {

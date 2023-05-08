@@ -53,7 +53,7 @@ export const ItemSummary = defineComponent({
     useAfterMe(fetchItems);
     */
     if (!props.startDate || !props.endDate) {
-      return () => <div>请选择时间范围</div>;
+      return () => <div>请选择时间</div>;
     }
     const itemStore = useItemStore(["items", props.startDate, props.endDate]);
     useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate));

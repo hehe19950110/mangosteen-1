@@ -104,7 +104,7 @@ export const ItemSummary = defineComponent({
 
     return () =>
       !props.startDate || !props.endDate ? (
-        <div>请选择时间</div>
+        <h3>请选择时间</h3>
       ) : (
         <div class={style.wrapper}>
           {itemStore.items && itemStore.items.length > 0 ? (

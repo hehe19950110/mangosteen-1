@@ -69,7 +69,6 @@ export const SignInPage = defineComponent({
           .post<{ jwt: string }>("/session", formData, { _autoLoading: true })
           .catch(onError); // 不确定前端展示的校验逻辑 能覆盖后端逻辑 所以 还是需要展示后端报错
         localStorage.setItem("jwt", response.data.jwt);
-        //  history.push("/");  错误 只切换地址栏、不切换页面 改为：router.push("/");
         const returnTo = route.query.return_to?.toString(); // 也可以写成 router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
         meStore.refreshMe();
         router.push(returnTo || "/");

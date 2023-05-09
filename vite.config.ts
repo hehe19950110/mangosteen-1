@@ -5,7 +5,7 @@ import { svgstore } from "./src/vite_plugins/svgstore";
 import styleImport, { VantResolve } from "vite-plugin-style-import";
 
 export default defineConfig({
-  base: "/mangosteen-fe-1/dist/",
+  base: "	https://accounting-2023-4-1313510194.cos-website.ap-shanghai.myqcloud.com",
   plugins: [
     vue(),
     vueJsx({
@@ -13,16 +13,22 @@ export default defineConfig({
       mergeProps: true,
     }),
     svgstore(),
-    styleImport({
-      resolves: [VantResolve()],
-    }),
+    // styleImport({
+    //   resolves: [VantResolve()],
+    // }),
   ],
+  build: {
+    rollupOptions: {
+      external: [
+        "react", // ignore react stuff
+        "react-dom",
+      ],
+    },
+  },
   server: {
     proxy: {
       "/api/v1": {
-        // 再出错 先用 postman 调用API地址
         target: "http://121.196.236.94:3000/",
-        // ip + port
       },
     },
     port: 8888,

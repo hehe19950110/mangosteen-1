@@ -141,7 +141,22 @@ const mock = (response: AxiosResponse) => {
   return false;
 };
 
-export const http = new Http("/api/v1");
+//export const http = new Http("/api/v1");
+//export const http = new Http("http://121.196.236.94:3000/api/v1");
+function isDev() {
+  if (
+    location.hostname !== "localhost" &&
+    location.hostname !== "127.0.0.1" &&
+    location.hostname !== "192.168.3.57"
+  ) {
+    return false;
+  }
+  return true;
+}
+export const http = new Http(
+  isDev() ? "api/v1" : "http://121.196.236.94:3000/api/v1"
+);
+
 /* 
     对 http 进行封装：
     interceptors request/response 拦截器； https://juejin.cn/post/6844903569745788941

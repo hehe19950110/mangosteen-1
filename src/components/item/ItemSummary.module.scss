@@ -78,6 +78,10 @@
   width: 160px;
   height: 160px;
   &_wrapper {
-    padding: 100px 0;
+    padding: 120px 0;
+    font-size: 20px;
+    p {
+      padding: 4px 0;
+    }
   }
 }

@@ -12,7 +12,7 @@ export const Overlay = defineComponent({
     },
   },
 
-  setup: (props, context) => {
+  setup: (props) => {
     const meStore = useMeStore();
     const close = () => {
       props.onClose?.();
@@ -29,6 +29,7 @@ export const Overlay = defineComponent({
         message: "你真的要退出登录吗？",
       });
       localStorage.removeItem("jwt");
+      window.location.reload();
     };
 
     return () => (
@@ -52,6 +53,12 @@ export const Overlay = defineComponent({
 
           <nav>
             <ul class={style.action_list}>
+              <li>
+                <RouterLink to="/items" class={style.action}>
+                  <Icon name="pig" class={style.icon} />
+                  <span>记账</span>
+                </RouterLink>
+              </li>
               <li>
                 <RouterLink to="/statistics" class={style.action}>
                   <Icon name="chartphoto" class={style.icon} />

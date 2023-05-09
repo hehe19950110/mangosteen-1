@@ -1,6 +1,7 @@
 import { defineComponent, PropType } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { LayoutNavBar } from "../layouts/LayoutNavBar";
+import { Button } from "./buttons/Button";
 import { FloatButton } from "./buttons/FloatButton";
 import { Center } from "./Center";
 import style from "./ComingSoon.module.scss";
@@ -14,6 +15,10 @@ export const ComingSoon = defineComponent({
     },
   },
   setup: (props, context) => {
+    const router = useRouter();
+    const onClick = () => {
+      router.back();
+    };
     return () => (
       <LayoutNavBar>
         {{
@@ -26,6 +31,9 @@ export const ComingSoon = defineComponent({
               </Center>
 
               <p class={style.text}> 敬请期待 </p>
+              <p class={style.link}>
+                <Button onClick={onClick}>返回</Button>
+              </p>
 
               <RouterLink to="/items/create">
                 <FloatButton iconName="add" />

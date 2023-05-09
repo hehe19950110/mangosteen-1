@@ -52,9 +52,7 @@ export const ItemSummary = defineComponent({
     //onMounted(fetchItems);
     useAfterMe(fetchItems);
     */
-    if (!props.startDate || !props.endDate) {
-      return () => <div>请选择时间</div>;
-    }
+
     const itemStore = useItemStore(["items", props.startDate, props.endDate]);
     useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate));
 
@@ -63,7 +61,7 @@ export const ItemSummary = defineComponent({
       // 重置 items、hasMore、page：
       () => {
         itemStore.$reset();
-        itemStore.fetchItems();
+        itemStore.fetchItems(props.startDate, props.endDate);
       }
     );
 
@@ -104,87 +102,91 @@ export const ItemSummary = defineComponent({
       }
     );
 
-    return () => (
-      <div class={style.wrapper}>
-        {itemStore.items && itemStore.items.length > 0 ? (
-          <>
-            <ul class={style.total}>
-              <li>
-                <span>收入</span>
-                <Money value={itemsBalance.income} />
-              </li>
-              <li>
-                <span>支出</span>
-                <Money value={itemsBalance.expenses} />
-              </li>
-              <li>
-                <span>净收入</span>
-                <Money value={itemsBalance.balance} />
-              </li>
-            </ul>
-
-            <ol class={style.list}>
-              {itemStore.items.map((item) => (
+    return () =>
+      !props.startDate || !props.endDate ? (
+        <div>请选择时间</div>
+      ) : (
+        <div class={style.wrapper}>
+          {itemStore.items && itemStore.items.length > 0 ? (
+            <>
+              <ul class={style.total}>
                 <li>
-                  <div class={style.sign}>
-                    <span>
-                      {item.tags && item.tags.length > 0
-                        ? item.tags[0].sign
-                        : "💰"}
-                    </span>
-                  </div>
-
-                  <div class={style.text}>
-                    <div class={style.tagAndAmount}>
-                      <span class={style.tag}>
-                        {item.tags && item.tags.length > 0
-                          ? item.tags[0].name
-                          : "未分类"}
-                      </span>
-                      <span class={style.amount}>
-                        ￥<Money value={item.amount} />
-                      </span>
-                    </div>
-                    <div class={style.time}>
-                      <Datetime value={item.happen_at} />
-                    </div>
-                  </div>
+                  <span>收入</span>
+                  <Money value={itemsBalance.income} />
                 </li>
-              ))}
-            </ol>
+                <li>
+                  <span>支出</span>
+                  <Money value={itemsBalance.expenses} />
+                </li>
+                <li>
+                  <span>净收入</span>
+                  <Money value={itemsBalance.balance} />
+                </li>
+              </ul>
 
-            <div class={style.more}>
-              {itemStore.hasMore ? (
-                <Button
-                  onClick={() =>
-                    itemStore.fetchNextPage(props.startDate, props.endDate)
-                  }
-                >
-                  向下滑动加载更多
-                </Button>
-              ) : (
-                <span>没有更多</span>
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <Center class={style.pig_wrapper}>
-              <Icon name="pig" class={style.pig} />
-            </Center>
+              <ol class={style.list}>
+                {itemStore.items.map((item) => (
+                  <li>
+                    <div class={style.sign}>
+                      <span>
+                        {item.tags && item.tags.length > 0
+                          ? item.tags[0].sign
+                          : "💰"}
+                      </span>
+                    </div>
 
-            <div class={style.button_wrapper}>
-              <RouterLink to="/items/create">
-                <Button class={style.button}> 开始记账 </Button>
-              </RouterLink>
-            </div>
-          </>
-        )}
+                    <div class={style.text}>
+                      <div class={style.tagAndAmount}>
+                        <span class={style.tag}>
+                          {item.tags && item.tags.length > 0
+                            ? item.tags[0].name
+                            : "未分类"}
+                        </span>
+                        <span class={style.amount}>
+                          ￥<Money value={item.amount} />
+                        </span>
+                      </div>
+                      <div class={style.time}>
+                        <Datetime value={item.happen_at} />
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ol>
 
-        <RouterLink to="/items/create">
-          <FloatButton iconName="add" />
-        </RouterLink>
-      </div>
-    );
+              <div class={style.more}>
+                {itemStore.hasMore ? (
+                  <Button
+                    onClick={() =>
+                      itemStore.fetchNextPage(props.startDate, props.endDate)
+                    }
+                  >
+                    向下滑动加载更多
+                  </Button>
+                ) : (
+                  <span>没有更多</span>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <Center class={style.pig_wrapper} direction="|">
+                <Icon name="pig" class={style.pig} />
+                <p>没有数据</p>
+              </Center>
+
+              <div class={style.button_wrapper}>
+                <RouterLink to="/items/create">
+                  <Button class={style.button}> 开始记账 </Button>
+                </RouterLink>
+              </div>
+            </>
+          )}
+
+          <RouterLink to="/items/create">
+            <FloatButton iconName="add" />
+          </RouterLink>
+        </div>
+      );
   },
 });

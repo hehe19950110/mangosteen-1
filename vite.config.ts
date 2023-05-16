@@ -32,6 +32,7 @@ export default defineConfig({
       },
     },
     port: 8888,
+    strictPort: true,
 
     // 本机默认的 ip :
     // 127.0.0.1

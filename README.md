@@ -34,5 +34,5 @@ base:
 
 ```
 pnpm run build --base /
-bin/coscli-linux cp -r dist cos://accounting-2023-4-1313510194
+bin/coscli-linux cp -r dist/ cos://accounting-2023-4-1313510194
 ```
